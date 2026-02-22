@@ -15,3 +15,5 @@ $sql = "INSERT INTO Games (last_changed, status, name)
 VALUES (NOW(), 'open', ?)";
 $stmt = $conn -> prepare($sql);
 $stmt->execute([$gameName]);
+
+header("Location: /index.php");

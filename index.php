@@ -10,7 +10,7 @@
 
 <body>
     <div class="main-content">
-        <form method="POST" action="create_game.php">
+        <form method="POST" action="helpers/create_game.php">
             <div class="form-group">
                 <label for="nickname">Your Nickname:</label>
                 <input type="text" class="form-control" name="nickname" aria-describedby="yourNickname" placeholder="Name here...">
@@ -44,8 +44,8 @@
                     <button class="btn btn-dark rounded-0" type="submit">${name}</button>
                 </div>`;
             }
-            
-            fetch("list_games.php")
+
+            fetch("helpers/list_games.php")
                 .then(res => res.json())
                 .then(data => {
                     const games = data;
