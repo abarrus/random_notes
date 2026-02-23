@@ -9,6 +9,20 @@
 </head>
 
 <body>
+    <p>
+        random word: <?php
+                        // 1. load the JSON file
+                        $wordsJson = file_get_contents("words.json");
+
+                        // 2. convert JSON into PHP array
+                        $words = json_decode($wordsJson, true); // true = associative array
+
+                        // 3. pick a random word
+                        $randomWord = $words[array_rand($words)];
+
+                        echo $randomWord;
+                        ?>
+    </p>
     <div class="main-content">
         <form method="POST" action="helpers/create_game.php">
             <div class="form-group">
@@ -18,14 +32,14 @@
             <div class="card container-fluid overflow-hidden text-center">
                 <div class="row">
                     <!-- Make Game half -->
-                    <div class="col bg-light py-4">
+                    <div class="col-12 col-md-6 bg-light py-4">
                         <h2>Make Game</h2>
                         <hr>
                         <input type="text" class="form-control mb-2" name="game-name" aria-describedby="gameName" placeholder="Name here...">
                         <button type="submit" class="btn btn-primary">Make Game</button>
                     </div>
                     <!-- Join Game half -->
-                    <div class="col bg-dark text-light py-4">
+                    <div class="col-12 col-md-6 bg-dark text-light py-4">
                         <h2>Join Game</h2>
                         <hr>
                         <div id="games">
@@ -41,7 +55,11 @@
             function addGameToList(id, name, container) {
                 container.innerHTML += `
                 <div class="row">
-                    <button class="btn btn-dark rounded-0" type="submit">${name}</button>
+                    <button
+                        name="id" value="${id}"
+                        class="btn btn-dark rounded-0"
+                        type="submit" formaction="helpers/join_game_form.php"
+                    >${name}</button>
                 </div>`;
             }
 
