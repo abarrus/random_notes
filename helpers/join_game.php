@@ -1,5 +1,6 @@
 <?php
 include "login.php";
+include "consts.php";
 
 function join_game($conn, $gameId, $nickname)
 {

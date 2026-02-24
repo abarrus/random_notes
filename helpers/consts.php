@@ -1,0 +1,2 @@
+<?php
+$numStartWords = 10;
