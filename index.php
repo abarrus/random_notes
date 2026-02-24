@@ -11,16 +11,8 @@
 <body>
     <p>
         random word: <?php
-                        // 1. load the JSON file
-                        $wordsJson = file_get_contents("words.json");
-
-                        // 2. convert JSON into PHP array
-                        $words = json_decode($wordsJson, true); // true = associative array
-
-                        // 3. pick a random word
-                        $randomWord = $words[array_rand($words)];
-
-                        echo $randomWord;
+                        include "random_word.php";
+                        echo random_word();
                         ?>
     </p>
     <div class="main-content">
