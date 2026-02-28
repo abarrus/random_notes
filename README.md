@@ -7,7 +7,7 @@ sql convenctions
 ### Words
 Words
 | COLUMN_NAME | DATA_TYPE | NOTES |
-|--------|-----|
-| game_id | char(16)  |
-| player_id    | char(16)  |
-| word | varchar |
+|--------|-----|--|
+| game_id | char(16)  ||
+| player_id    | char(16)  ||
+| word | varchar ||
