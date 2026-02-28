@@ -11,3 +11,6 @@ form {
     background-color: aliceblue;
     border: 1px solid black;
 }
+#err {
+    color: red;
+}

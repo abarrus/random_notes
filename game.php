@@ -14,9 +14,19 @@
     display_game();
     ?>
     <br>
-    <textarea id="myText"></textarea>
-    <p id="err"></p>
-    <div id="words-container"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <textarea id="myText" class="w-100" rows="1"></textarea>
+            </div>
+            <div class="row">
+                <p id="err"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div id="words-container"></div>
+        </div>
+    </div>
     <script>
         words = [];
 
@@ -49,30 +59,39 @@
             text = ta.value.split(" ");
 
             valid = true;
-            console.log("text:",text);
-            wordsUsed = [];
+            unusedWords = [...words];
 
             err = document.getElementById("err");
+
+            duplicateWords = [];
+            invalidWords = [];
 
             text.forEach(word => {
                 if (word === "") return;
 
-                if (!wordIsInList(word, words)) {
+                if (!wordIsInList(word, unusedWords)) {
                     valid = false;
-                    err.textContent = "Invalid word: "+word;
-                } else {
-                    if (wordIsInList(word, wordsUsed)) {
-                        // no duplicates
-                        valid = false;
-                        err.textContent = "Duplicate word not allowed: "+word;
+                    if (wordIsInList(word, words)) {
+                        duplicateWords.push(word);
+                    } else {
+                        invalidWords.push(word);
                     }
-                    wordsUsed.push(word);
+                } else {
+                    // it's valid so remove it from list of unusedWords
+                    unusedWords = unusedWords.filter(w => w !== word);
                 }
             })
 
+            err.textContent = "";
+            if (invalidWords.length > 0) {
+                err.textContent = "Invalid word(s): "+invalidWords.join(", ");
+            }
+            if (duplicateWords.length > 0) {
+                err.innerHTML += "<br>Duplicate word(s): "+duplicateWords.join(", ");
+            }
+
             if (valid) {
                 ta.style.borderColor = 'green';
-                err.textContent = "";
             } else {
                 ta.style.borderColor = 'red';
             }
