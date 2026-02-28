@@ -4,6 +4,11 @@ sql convenctions
 - table names are capitalized
 - row names are not capitalized, and they are like_this with underscores
 
+php conventions:
+- session variables are snake_case
+- variables are camelCase
+- function names are snake_case
+
 My Database Tables
 
 ### Words
