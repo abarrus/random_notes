@@ -7,3 +7,7 @@ form {
 .form-group {
     margin-bottom: 1rem;
 }
+.word {
+    background-color: aliceblue;
+    border: 1px solid black;
+}
