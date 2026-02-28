@@ -9,6 +9,10 @@
 </head>
 
 <body>
+    <?php
+        include "helpers/display_game.php";
+        display_game();
+    ?>
 </body>
 
 </html>

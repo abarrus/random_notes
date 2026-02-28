@@ -13,15 +13,13 @@ if (strlen($gameName) === 0) {
 
 $gameId = bin2hex(random_bytes(8)); // 16-char hex
 
-$sql = "INSERT INTO Games (last_changed, status, name, id)
-VALUES (NOW(), 'open', ?, ?)";
-$stmt = $conn->prepare($sql);
-$stmt->execute([$gameName, $gameId]);
+make_game($gameName, $gameId);
 
 header("Location: /index.php");
 exit;
 
-
+// TODO - go to game instead. can't have 2 headers.
+// this part of the code doesn't run yet btw
 join_game($conn, $gameId, $nickname);
 header("Location: /game.php");
 exit;
