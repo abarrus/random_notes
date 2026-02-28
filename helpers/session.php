@@ -16,7 +16,6 @@ function login($nickname)
     } else {
         // check if user id still in table list
         // could have been deleted due to inactivity
-
         if(!user_exists($_SESSION['player_id'])) {
             new_id($nickname);
         }
