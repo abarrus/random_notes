@@ -22,13 +22,13 @@ function display_game() {
     session_start();
 
     $gameId = $_SESSION["game_id"];
-    $userId = $_SESSION["user_id"];
+    $playerId = $_SESSION["player_id"];
 
     display_players();
-    display_your_words($gameId, $userId);
+    display_your_words($gameId, $playerId);
 
     echo("<br>");
-    echo("user id: ".$_SESSION["user_id"]);
+    echo("user id: ".$_SESSION["player_id"]);
     echo("<br>");
     echo("game id: ".$_SESSION["game_id"]);
 }
