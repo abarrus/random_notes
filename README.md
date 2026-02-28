@@ -4,6 +4,8 @@ sql convenctions
 - table names are capitalized
 - row names are not capitalized, and they are like_this with underscores
 
+My Database Tables
+
 ### Words
 | COLUMN_NAME | TYPE | NOTES |
 |--------|-----|--|
@@ -23,8 +25,8 @@ sql convenctions
 |-|-|-|
 | game_id     | char(16)      |
 | player_id   | char(16)      |
-| submission  | varchar(1000) |
-| vote        | char(16)      |
+| submission  | varchar(1000) | the sentence they made
+| vote        | char(16)      | the user id of who submitted their favorite sentence
 
 ### Games
 | COLUMN_NAME  | TYPE    |NOTES|
