@@ -14,11 +14,6 @@ function give_starting_words($playerId, $gameId)
 
 function join_game($gameId, $nickname)
 {
-    // no empty vars
-    if (strlen($nickname) === 0) {
-        $nickname = "Player";
-    }
-
     $playerId = login($nickname);
     $_SESSION["game_id"] = $gameId;
 

@@ -2,6 +2,11 @@
 
 function new_id($nickname)
 {
+    // no empty vars
+    if (strlen($nickname) === 0) {
+        $nickname = "Player";
+    }
+
     // make a random ID for this session
     $_SESSION['player_id'] = bin2hex(random_bytes(8)); // 16-char hex
 
@@ -16,8 +21,13 @@ function login($nickname)
     } else {
         // check if user id still in table list
         // could have been deleted due to inactivity
-        if(!user_exists($_SESSION['player_id'])) {
+        if (!user_exists($_SESSION['player_id'])) {
             new_id($nickname);
+        } else {
+            if (strlen($nickname) > 0) {
+                // in case they changed their nickname
+                set_nickname($_SESSION['player_id'], $nickname);
+            }
         }
     }
     return $_SESSION['player_id'];

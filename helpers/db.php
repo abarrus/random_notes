@@ -97,3 +97,25 @@ function get_games()
   $stmt = $conn->query("SELECT id, status, last_changed, name FROM Games ORDER BY last_changed DESC");
   return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+function get_players($gameId)
+{
+  $conn = connect();
+
+  $sql = "SELECT DISTINCT Users.name FROM
+    Users JOIN Words ON Words.player_id = Users.id
+    WHERE Words.game_id = ?";
+  $stmt = $conn->prepare($sql);
+  $stmt->execute([$gameId]);
+
+  return $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+}
+
+function set_nickname($playerId, $nickname)
+{
+  $conn = connect();
+
+  $sql = "UPDATE Users SET name=? WHERE id=?";
+  $stmt = $conn->prepare($sql);
+  $stmt->execute([$nickname, $playerId]);
+}

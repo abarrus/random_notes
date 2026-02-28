@@ -1,7 +1,8 @@
 <?php
 
-function display_players() {
-    // TODO
+function display_players($gameId) {
+    $players = get_players($gameId);
+    echo("Players: ".implode(", ", $players));
 }
 
 function display_your_words($gameId, $playerId) {
@@ -13,7 +14,7 @@ function display_your_words($gameId, $playerId) {
     }
 
     // comma-separated list
-    echo implode(", ", $words);
+    echo("Your words: ".implode(", ", $words));
 }
 
 function display_game() {
@@ -24,7 +25,8 @@ function display_game() {
     $gameId = $_SESSION["game_id"];
     $playerId = $_SESSION["player_id"];
 
-    display_players();
+    display_players($gameId);
+    echo("<br>");
     display_your_words($gameId, $playerId);
 
     echo("<br>");
