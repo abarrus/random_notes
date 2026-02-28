@@ -16,11 +16,7 @@
     <br>
     <textarea id="myText"></textarea>
     <p id="err"></p>
-    <div id="words-container">
-        <div class="word" draggable="true">I</div>
-        <div class="word" draggable="true">love</div>
-        <div class="word" draggable="true">pizza</div>
-    </div>
+    <div id="words-container"></div>
     <script>
         words = [];
 
