@@ -55,8 +55,10 @@
         }
 
         ta.addEventListener('input', () => {
-            ta.value = ta.value.replace(/[^a-zA-Z ]/g, "");
-            text = ta.value.split(" ");
+            // \r is Windows newlines?
+            ta.value = ta.value.replace(/[^a-zA-Z \n\r]/g, "");
+            // split on one or more whitespace
+            text = ta.value.split(/\s+/);
 
             valid = true;
             unusedWords = [...words];
@@ -84,10 +86,10 @@
 
             err.textContent = "";
             if (invalidWords.length > 0) {
-                err.textContent = "Invalid word(s): "+invalidWords.join(", ");
+                err.textContent = "Invalid word(s): " + invalidWords.join(", ");
             }
             if (duplicateWords.length > 0) {
-                err.innerHTML += "<br>Duplicate word(s): "+duplicateWords.join(", ");
+                err.innerHTML += "<br>Duplicate word(s): " + duplicateWords.join(", ");
             }
 
             if (valid) {
@@ -95,6 +97,13 @@
             } else {
                 ta.style.borderColor = 'red';
             }
+
+            // textarea rows increases when you add a newline
+
+            // reset height so shrinking works too
+            ta.style.height = 'auto';
+            // set height to scrollHeight
+            ta.style.height = ta.scrollHeight + 'px';
         });
     </script>
 </body>
