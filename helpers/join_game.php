@@ -1,5 +1,5 @@
 <?php
-include "login.php";
+include "session.php";
 
 function has_words($conn, $playerId, $gameId)
 {
