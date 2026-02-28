@@ -32,8 +32,6 @@ function get_words($gameId, $playerId)
 // Returns true or false for if this player is in this game
 function is_in_game($gameId, $playerId)
 {
-  $conn = connect();
-
   $words = get_words($gameId, $playerId);
   return count($words) > 0;
 }
