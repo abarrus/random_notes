@@ -9,14 +9,15 @@
 </head>
 
 <body>
+    <h1>Random Notes!</h1>
     <p>
         random word: <?php
-                        include "random_word.php";
+                        include "helpers/random_word.php";
                         echo random_word();
                         ?>
     </p>
     <div class="main-content">
-        <form method="POST" action="helpers/create_game.php">
+        <form method="POST" action="actions/create_game.php">
             <div class="form-group">
                 <label for="nickname">Your Nickname:</label>
                 <input type="text" class="form-control" name="nickname" aria-describedby="yourNickname" placeholder="Name here...">
@@ -46,11 +47,11 @@
         function loadGames() {
             function addGameToList(id, name, container) {
                 container.innerHTML += `
-                <div class="row">
+                <div class="row p-2">
                     <button
                         name="id" value="${id}"
-                        class="btn btn-dark rounded-0"
-                        type="submit" formaction="helpers/join_game_form.php"
+                        class="btn btn-dark border-light mb-1"
+                        type="submit" formaction="actions/join_game_form.php"
                     >${name}</button>
                 </div>`;
             }

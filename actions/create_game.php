@@ -1,6 +1,7 @@
 <?php
-require_once 'db.php';
-include "join_game.php";
+
+require_once '../helpers/db.php';
+include "../helpers/join_game.php";
 
 $nickname = $_POST["nickname"];
 $gameName = $_POST["game-name"];

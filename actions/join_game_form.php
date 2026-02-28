@@ -1,6 +1,6 @@
 <?php
-require "db.php";
-include "join_game.php";
+require "../helpers/db.php";
+include "../helpers/join_game.php";
 
 $nickname = $_POST["nickname"];
 $gameId = $_POST["id"];
