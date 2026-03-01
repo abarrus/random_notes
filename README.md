@@ -1,6 +1,6 @@
 PDO - no mysqli
 
-sql convenctions
+sql conventions
 - table names are PascalCase
 - row names are snake_case
 
