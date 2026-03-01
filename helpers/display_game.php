@@ -5,18 +5,6 @@ function display_players($gameId) {
     echo("Players: ".implode(", ", $players));
 }
 
-function display_your_words($gameId, $playerId) {
-    $words = get_words($gameId, $playerId);
-
-    if (empty($words)) {
-        echo "No words... uh oh.";
-        return;
-    }
-
-    // comma-separated list
-    echo("Your words: ".implode(", ", $words));
-}
-
 function display_game() {
     include "session.php";
     include "db.php";
@@ -26,9 +14,7 @@ function display_game() {
     $playerId = $_SESSION["player_id"];
 
     display_players($gameId);
-    echo("<br>");
-    display_your_words($gameId, $playerId);
-
+    
     echo("<br>");
     echo("user id: ".$_SESSION["player_id"]);
     echo("<br>");
