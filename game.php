@@ -23,32 +23,48 @@
                 <p id="err"></p>
             </div>
         </div>
-        <div class="row">
-            <div id="words-container"></div>
-        </div>
+        <!-- g-3 = gap between rows 1rem -->
+        <div class="row g-3" id="words-container"></div>
     </div>
     <script>
         words = [];
+        unusedWords = [];
+
+        function updateWordsHTML() {
+            container = document.getElementById("words-container");
+            container.innerHTML = "";
+            unusedWords.forEach(word => {
+                container.innerHTML += `
+                    <div class="col-4">
+                        <button class="btn btn-primary w-100" onclick="addWord('${word}')">
+                            ${word}
+                        </button>
+                    </div>`;
+            });
+        }
 
         function load() {
             fetch("helpers/get_words.php")
                 .then(res => res.json())
                 .then(data => {
                     words = data;
-
-                    container = document.getElementById("words-container");
-                    container.innerHTML = "";
-                    words.forEach(word => {
-                        container.innerHTML += `<div class="word" draggable="true">${word}</div>`;
-                    })
+                    unusedWords = [...words];
+                    updateWordsHTML();
                 })
         }
 
         load();
 
 
+
         const ta = document.getElementById('myText');
-        const status = document.getElementById('status');
+
+        function addWord(word) {
+            ta.value += ` ${word}`;
+            // remove word from words
+            unusedWords = unusedWords.filter(w => w !== word);
+            updateWordsHTML();
+        }
 
         function wordIsInList(wordToCheck, listToCheck) {
             return listToCheck.some(wordInWords => wordToCheck.toLowerCase() === wordInWords.toLowerCase());
@@ -61,6 +77,7 @@
             text = ta.value.split(/\s+/);
 
             valid = true;
+
             unusedWords = [...words];
 
             err = document.getElementById("err");
@@ -104,6 +121,8 @@
             ta.style.height = 'auto';
             // set height to scrollHeight
             ta.style.height = ta.scrollHeight + 'px';
+
+            updateWordsHTML();
         });
     </script>
 </body>
