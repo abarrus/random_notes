@@ -16,13 +16,14 @@
     <br>
     <div class="container">
         <div class="row">
-            <div class="col">
+            <h2>Your Submission:</h2>
+        </div>
+        <div class="row">
                 <textarea id="myText" class="w-100" rows="1"></textarea>
-            </div>
-            <div class="row">
+            
+        </div><div class="row">
                 <p id="err"></p>
             </div>
-        </div>
         <!-- g-3 = gap between rows 1rem -->
         <div class="row g-3" id="words-container"></div>
     </div>
@@ -60,8 +61,16 @@
         const ta = document.getElementById('myText');
 
         function addWord(word) {
-            ta.value += ` ${word}`;
-            // remove word from words
+            // add word to textarea, with extra space (only if necessary)
+            lastLetter = s => s.charAt(s.length - 1);
+            lastLetterIsWhitespace = /\s/.test(lastLetter(ta.value));
+            if (ta.value === "" || lastLetterIsWhitespace) {
+                ta.value += word;
+            } else {
+                ta.value += " " + word;
+            }
+
+            // remove word from unusedWords
             unusedWords = unusedWords.filter(w => w !== word);
             updateWordsHTML();
         }
