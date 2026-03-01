@@ -15,7 +15,9 @@ function new_id($nickname)
 
 function login($nickname)
 {
-    session_start();
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
     if (!isset($_SESSION['player_id'])) {
         new_id($nickname);
     } else {

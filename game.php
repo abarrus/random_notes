@@ -10,6 +10,7 @@
 
 <body>
     <?php
+    include "helpers/top.php";
     include "helpers/display_game.php";
     display_game();
     ?>
@@ -19,13 +20,24 @@
             <h2>Your Submission:</h2>
         </div>
         <div class="row">
-                <textarea id="myText" class="w-100" rows="1"></textarea>
-            
-        </div><div class="row">
-                <p id="err"></p>
-            </div>
+            <textarea id="myText" class="w-100" rows="1"></textarea>
+
+        </div>
+        <div class="row">
+            <p id="err"></p>
+        </div>
         <!-- g-3 = gap between rows 1rem -->
         <div class="row g-3" id="words-container"></div>
+        <hr>
+        <div class="row mt-3">
+            <p class="mb-0">Notes:</p>
+            <ul>
+                <li>You don't have to use all words.</li>
+                <li>No duplicates (unless you actually have multiple of a word).</li>
+                <li> No special characters or numbers.</li>
+                <li>You can add whatever whitespace you want.</li>
+            </ul>
+        </div>
     </div>
     <script>
         words = [];
