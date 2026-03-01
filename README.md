@@ -1,8 +1,8 @@
 PDO - no mysqli
 
 sql convenctions
-- table names are capitalized
-- row names are not capitalized, and they are like_this with underscores
+- table names are PascalCase
+- row names are snake_case
 
 php conventions:
 - session variables are snake_case
