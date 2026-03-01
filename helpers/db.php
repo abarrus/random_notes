@@ -129,3 +129,11 @@ function set_nickname($playerId, $nickname)
   $stmt = $conn->prepare($sql);
   $stmt->execute([$nickname, $playerId]);
 }
+
+function submit_sentence($gameId, $playerId, $submission) {
+  $conn = connect();
+
+  $sql = "INSERT INTO Moves (game_id, player_id, submission) VALUES (?, ?, ?)";
+  $stmt = $conn->prepare($sql);
+  $stmt->execute([$gameId, $playerId, $submission]);
+}
