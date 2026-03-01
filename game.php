@@ -19,15 +19,18 @@
         <div class="row">
             <h2>Your Submission:</h2>
         </div>
-        <div class="row">
-            <textarea id="myText" class="w-100" rows="1"></textarea>
-
-        </div>
-        <div class="row">
-            <p id="err"></p>
-        </div>
-        <!-- g-3 = gap between rows 1rem -->
-        <div class="row g-3" id="words-container"></div>
+        <form method="POST" action="actions/submit_words.php">
+            <div class="row">
+                <textarea name="submission" id="myText" class="w-100" rows="1"></textarea>
+            </div>
+            <div class="row">
+                <p id="err"></p>
+            </div>
+            <!-- g-3 = gap between rows 1rem -->
+            <div class="row g-3" id="words-container"></div>
+            <hr>
+            <button class="btn btn-success" onclick="submit()">Submit</button>
+        </form>
         <hr>
         <div class="row mt-3">
             <p class="mb-0">Notes:</p>
