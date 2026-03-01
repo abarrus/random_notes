@@ -83,9 +83,19 @@ function clean_old_games()
 {
   $conn = connect();
 
+  // TODO: realistically the SQL should handle the second part
+  // if i set it up properly with:
+  // FOREIGN KEY (game_id)
+  // REFERENCES Games(game_id)
+  // ON DELETE CASCADE
+  // but i don't feel like it rn
   $stmt = "
     DELETE FROM Games
-    WHERE last_changed < NOW() - INTERVAL 1 DAY
+    WHERE last_changed < NOW() - INTERVAL 1 DAY;
+
+    DELETE FROM Words WHERE game_id NOT IN (
+      SELECT game_id FROM Games
+    );
     ";
   $conn->exec($stmt);
 }
