@@ -22,7 +22,7 @@ function get_words($gameId, $playerId)
 {
   $conn = connect();
 
-  $sql = "SELECT word FROM Words WHERE game_id = ? AND player_id = ?;";
+  $sql = "SELECT word FROM Words WHERE game_id = ? AND player_id = ? ORDER BY word;";
   $stmt = $conn->prepare($sql);
   $stmt->execute([$gameId, $playerId]);
 
