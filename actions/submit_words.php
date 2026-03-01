@@ -1,2 +1,4 @@
 <?php
-echo "submitted ur words (not really)";
+
+$submission = $_POST["submission"];
+echo "<br><p style='white-space:pre-wrap'> you submitted \"".$submission."\"</p>";

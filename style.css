@@ -1,3 +1,7 @@
+* {
+    /* so HTML stops getting rid of my newlines and extra spaces */
+    white-space: pre-wrap;
+}
 .main-content {
     padding: 2rem;
 }
