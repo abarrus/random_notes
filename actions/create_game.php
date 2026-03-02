@@ -15,9 +15,6 @@ $gameId = bin2hex(random_bytes(8)); // 16-char hex
 
 make_game($gameName, $gameId);
 
-header("Location: /index.php");
-exit;
-
 // TODO - go to game instead. can't have 2 headers.
 // this part of the code doesn't run yet btw
 join_game($conn, $gameId, $nickname);
