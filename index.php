@@ -10,12 +10,6 @@
 
 <body>
     <h1>Random Notes!</h1>
-    <p>
-        random word: <?php
-                        include "helpers/random_word.php";
-                        echo random_word();
-                        ?>
-    </p>
     <div class="main-content">
         <form method="POST" action="actions/create_game.php">
             <div class="form-group">
