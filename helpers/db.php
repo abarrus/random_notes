@@ -49,7 +49,7 @@ function user_exists($playerId)
 {
   $conn = connect();
 
-  $sql = "SELECT * FROM Users WHERE id = ?";
+  $sql = "SELECT * FROM Players WHERE id = ?";
   $stmt = $conn->prepare($sql);
   $stmt->execute([$playerId]);
 
@@ -62,7 +62,7 @@ function make_player($playerId, $nickname)
 {
   $conn = connect();
 
-  $sql = "INSERT INTO Users (id, name, last_active)
+  $sql = "INSERT INTO Players (id, name, last_active)
 VALUES (?, ?, NOW())";
   $stmt = $conn->prepare($sql);
   $stmt->execute([$playerId, $nickname]);
@@ -112,8 +112,8 @@ function get_players($gameId)
 {
   $conn = connect();
 
-  $sql = "SELECT DISTINCT Users.name FROM
-    Users JOIN Words ON Words.player_id = Users.id
+  $sql = "SELECT DISTINCT Players.name FROM
+    Players JOIN Words ON Words.player_id = Players.id
     WHERE Words.game_id = ?";
   $stmt = $conn->prepare($sql);
   $stmt->execute([$gameId]);
@@ -125,7 +125,7 @@ function set_nickname($playerId, $nickname)
 {
   $conn = connect();
 
-  $sql = "UPDATE Users SET name=? WHERE id=?";
+  $sql = "UPDATE Players SET name=? WHERE id=?";
   $stmt = $conn->prepare($sql);
   $stmt->execute([$nickname, $playerId]);
 }
@@ -141,7 +141,7 @@ function submit_sentence($gameId, $playerId, $submission) {
 function get_nickname($playerId) {
   $conn = connect();
 
-  $sql = "SELECT name FROM Users WHERE id=?";
+  $sql = "SELECT name FROM Players WHERE id=?";
   $stmt = $conn->prepare($sql);
   $stmt->execute([$playerId]);
   $name = $stmt->fetchColumn(); // gets first column of first row
@@ -151,7 +151,7 @@ function get_nickname($playerId) {
 function get_submissions($gameId) {
   $conn = connect();
 
-  $sql = "SELECT m.submission, m.round, u.name FROM Moves m JOIN Users u ON m.player_id = u.id WHERE game_id=?";
+  $sql = "SELECT m.submission, m.round, p.name FROM Moves m JOIN Players p ON m.player_id = p.id WHERE game_id=?";
   $stmt = $conn->prepare($sql);
   $stmt->execute([$gameId]);
 

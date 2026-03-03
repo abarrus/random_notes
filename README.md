@@ -21,7 +21,7 @@ My Database Tables
 | player_id   | char(16)     |       |
 | word        | varchar(255) |       |
 
-### Users
+### Players
 
 | COLUMN_NAME | TYPE         | NOTES |
 | ----------- | ------------ | ----- |
