@@ -47,7 +47,7 @@
 
                         const submissionP = submission == null ?
                             `<p style="color:red;">EMPTY</p>` :
-                            `<p>${submission}</p>`;
+                            `<p style='white-space:pre-wrap'>${submission}</p>`;
 
                         submissionsRow.innerHTML += `
                             <div class="col-6">
