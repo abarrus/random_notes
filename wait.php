@@ -40,7 +40,6 @@
 
                     console.log(data);
                     const submissionsRow = document.getElementById("submissions");
-                    data.push
                     data.forEach(submissionWithName => {
                         console.log("for", submissionWithName);
                         const player = submissionWithName.name;
