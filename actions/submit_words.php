@@ -13,4 +13,5 @@ $playerId = $_SESSION["player_id"];
 
 submit_sentence($gameId, $playerId, $submission);
 
-echo "<br> i think it's submitted";
+header("LOCATION: /wait.php");
+exit;
