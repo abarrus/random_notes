@@ -151,7 +151,8 @@ function get_nickname($playerId) {
 function get_submissions($gameId) {
   $conn = connect();
 
-  $sql = "SELECT m.submission, m.round, p.name FROM Moves m JOIN Players p ON m.player_id = p.id WHERE game_id=?";
+  // select submissions for that gameId only for the round the game is currently on
+  $sql = "SELECT m.submission, m.round, p.name FROM Moves m JOIN Player p ON m.player_id = p.id JOIN Games g ON m.game_id = g.id WHERE m.game_id = ? AND m.round = g.round";
   $stmt = $conn->prepare($sql);
   $stmt->execute([$gameId]);
 
