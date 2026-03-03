@@ -12,5 +12,3 @@ $name = get_nickname($id);
 echo <<<EOD
 <div class="bg-dark text-light p-3">$name</div>
 EOD;
-
-echo "HELLOOOOOOO";
