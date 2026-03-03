@@ -1,7 +1,9 @@
 <?php
 include "db.php";
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 $gameId = $_SESSION["game_id"];
 $playerId = $_SESSION["player_id"];
 
