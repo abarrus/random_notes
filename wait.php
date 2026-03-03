@@ -45,12 +45,14 @@
                         console.log("for",submissionWithName);
                         const player = submissionWithName.name;
                         const submission = submissionWithName.submission;
+                        const round = submissionWithName.round;
 
                         submissionsRow.innerHTML += `
                             <div class="col-6">
                                 <div class="card p-2">
                                     <h3>${player}</h3>
                                     <p>${submission}</p>
+                                    <p>Round: ${round}</p>
                                 </div>
                             </div>
                         `;

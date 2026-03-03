@@ -72,8 +72,8 @@ function make_game($gameName, $gameId)
 {
   $conn = connect();
 
-  $sql = "INSERT INTO Games (last_changed, status, name, id)
-VALUES (NOW(), 'open', ?, ?)";
+  $sql = "INSERT INTO Games (last_changed, status, name, id, round)
+VALUES (NOW(), 'open', ?, ?, 0)";
   $stmt = $conn->prepare($sql);
   $stmt->execute([$gameName, $gameId]);
 }
@@ -133,9 +133,9 @@ function set_nickname($playerId, $nickname)
 function submit_sentence($gameId, $playerId, $submission) {
   $conn = connect();
 
-  $sql = "INSERT INTO Moves (game_id, player_id, submission) VALUES (?, ?, ?)";
+  $sql = "INSERT INTO Moves (game_id, player_id, submission, round) VALUES (?, ?, ?, (SELECT round FROM Games WHERE id = ?))";
   $stmt = $conn->prepare($sql);
-  $stmt->execute([$gameId, $playerId, $submission]);
+  $stmt->execute([$gameId, $playerId, $submission, $gameId]);
 }
 
 function get_nickname($playerId) {
@@ -151,7 +151,7 @@ function get_nickname($playerId) {
 function get_submissions($gameId) {
   $conn = connect();
 
-  $sql = "SELECT m.submission, u.name FROM Moves m JOIN Users u ON m.player_id = u.id WHERE game_id=?";
+  $sql = "SELECT m.submission, m.round, u.name FROM Moves m JOIN Users u ON m.player_id = u.id WHERE game_id=?";
   $stmt = $conn->prepare($sql);
   $stmt->execute([$gameId]);
 
