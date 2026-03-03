@@ -130,7 +130,8 @@ function set_nickname($playerId, $nickname)
   $stmt->execute([$nickname, $playerId]);
 }
 
-function submit_sentence($gameId, $playerId, $submission) {
+function submit_sentence($gameId, $playerId, $submission)
+{
   $conn = connect();
 
   $sql = "INSERT INTO Moves (game_id, player_id, submission, round) VALUES (?, ?, ?, (SELECT round FROM Games WHERE id = ?))";
@@ -138,7 +139,8 @@ function submit_sentence($gameId, $playerId, $submission) {
   $stmt->execute([$gameId, $playerId, $submission, $gameId]);
 }
 
-function get_nickname($playerId) {
+function get_nickname($playerId)
+{
   $conn = connect();
 
   $sql = "SELECT name FROM Players WHERE id=?";
@@ -148,7 +150,8 @@ function get_nickname($playerId) {
   return $name ?: null;
 }
 
-function get_submissions($gameId) {
+function get_submissions($gameId)
+{
   $conn = connect();
 
   // select submissions for that gameId only for the round the game is currently on
@@ -157,4 +160,14 @@ function get_submissions($gameId) {
   $stmt->execute([$gameId]);
 
   return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_game_name($gameId)
+{
+  $conn = connect();
+  $sql = "SELECT name FROM Games WHERE id=?";
+  $stmt = $conn->prepare($sql);
+  $stmt->execute([$gameId]);
+  $name = $stmt->fetchColumn(); // gets first column of first row
+  return $name;
 }
