@@ -38,21 +38,23 @@
                 .then(res => res.json())
                 .then(data => {
 
-            console.log(data);
+                    console.log(data);
                     const submissionsRow = document.getElementById("submissions");
                     data.push
                     data.forEach(submissionWithName => {
-                        console.log("for",submissionWithName);
+                        console.log("for", submissionWithName);
                         const player = submissionWithName.name;
                         const submission = submissionWithName.submission;
-                        const round = submissionWithName.round;
+
+                        const submissionP = submission == null ?
+                            `<p style="color:red;">EMPTY</p>` :
+                            `<p>${submission}</p>`;
 
                         submissionsRow.innerHTML += `
                             <div class="col-6">
                                 <div class="card p-2">
                                     <h3>${player}</h3>
-                                    <p>${submission}</p>
-                                    <p>Round: ${round}</p>
+                                    ${submissionP}
                                 </div>
                             </div>
                         `;
