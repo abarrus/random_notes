@@ -37,6 +37,7 @@ My Database Tables
 | player_id   | char(16)      |
 | submission  | varchar(1000) | the sentence they made                                 |
 | vote        | char(16)      | the player_id of who submitted their favorite sentence |
+| round       | smallint      |                                                        |
 
 ### Games
 
