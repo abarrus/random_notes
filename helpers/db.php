@@ -147,3 +147,13 @@ function get_nickname($playerId) {
   $name = $stmt->fetchColumn(); // gets first column of first row
   return $name ?: null;
 }
+
+function get_submissions($gameId) {
+  $conn = connect();
+
+  $sql = "SELECT m.submission, u.name FROM Moves m JOIN Users u ON m.player_id = u.id WHERE game_id=?";
+  $stmt = $conn->prepare($sql);
+  $stmt->execute([$gameId]);
+
+  return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
