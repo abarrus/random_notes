@@ -137,3 +137,13 @@ function submit_sentence($gameId, $playerId, $submission) {
   $stmt = $conn->prepare($sql);
   $stmt->execute([$gameId, $playerId, $submission]);
 }
+
+function get_nickname($playerId) {
+  $conn = connect();
+
+  $sql = "SELECT name FROM Users WHERE id=?";
+  $stmt = $conn->prepare($sql);
+  $stmt->execute([$playerId]);
+  $name = $stmt->fetchColumn(); // gets first column of first row
+  return $name ?: null;
+}
