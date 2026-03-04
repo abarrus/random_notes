@@ -26,10 +26,12 @@
                     const submissionsRow = document.getElementById("submissions");
                     const submissionsWithNames = data.submissions;
                     const goToVoting = data.goToVoting; // true or false
-                    console.log("go to voting?",goToVoting);
+                    console.log("go to voting?", goToVoting);
                     submissionsWithNames.forEach(submissionWithName => {
                         const player = submissionWithName.name;
                         const submission = submissionWithName.submission;
+                        const id = submissionWithName.id;
+                        console.log("submitted:",submissionWithName);
 
                         const submissionP = submission == null ?
                             `<p style="color:red;">EMPTY</p>` :
@@ -37,10 +39,11 @@
 
                         submissionsRow.innerHTML += `
                             <div class="col-6">
-                                <label type="radio" for="${player}" class="card p-2">
+                                <label type="radio" for="${id}" class="card p-2">
                                     <h3>${player}</h3>
+                                    <p>${id}</p>
                                     ${submissionP}
-                                    <input type="radio" id="${player}" name="vote" value="${player}">
+                                    <input type="radio" id="${id}" name="vote" value="${id}">
                                 </label>
                             </div>
                         `;

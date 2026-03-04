@@ -112,13 +112,13 @@ function get_players($gameId)
 {
   $conn = connect();
 
-  $sql = "SELECT DISTINCT Players.name FROM
+  $sql = "SELECT DISTINCT Players.name, Players.id FROM
     Players JOIN Words ON Words.player_id = Players.id
     WHERE Words.game_id = ?";
   $stmt = $conn->prepare($sql);
   $stmt->execute([$gameId]);
 
-  return $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+  return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 function set_nickname($playerId, $nickname)
@@ -155,7 +155,7 @@ function get_submissions($gameId)
   $conn = connect();
 
   // select submissions for that gameId only for the round the game is currently on
-  $sql = "SELECT m.submission, m.round, p.name FROM Moves m JOIN Players p ON m.player_id = p.id JOIN Games g ON m.game_id = g.id WHERE m.game_id = ? AND m.round = g.round";
+  $sql = "SELECT m.submission, m.round, p.name, p.id FROM Moves m JOIN Players p ON m.player_id = p.id JOIN Games g ON m.game_id = g.id WHERE m.game_id = ? AND m.round = g.round";
   $stmt = $conn->prepare($sql);
   $stmt->execute([$gameId]);
 
