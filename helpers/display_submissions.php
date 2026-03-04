@@ -24,13 +24,17 @@ $playerId = $_SESSION["player_id"];
 $submissions = get_submissions($gameId);
 
 $players = get_players($gameId);
+
+$goToVoting = true;
+
 foreach ($players as $player) {
     // use ($player) lets the function see $player, since that's outside its scope
     if (!containsPlayer($submissions, $player)) {
         array_push($submissions, array("name"=>$player, "submission"=>null));
+        $goToVoting = false;
     }
 }
 
 // send as JSON
 header('Content-Type: application/json');
-echo json_encode($submissions);
+echo json_encode(array("goToVoting"=>$goToVoting, "submissions"=>$submissions));

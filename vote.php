@@ -13,25 +13,12 @@
     include "helpers/top.php";
     ?>
     <div class="main-content">
-        <p>Waiting for other players... refreshing in <span id="seconds"></span> seconds...</p>
-        <p>If you want it faster just reload the page yourself but be warned the server gets mad</p>
+        <p>Vote for your favorite!</p>
         <div class="container-fluid">
             <div class="row g-3" id="submissions"></div>
         </div>
     </div>
     <script>
-        const span = document.getElementById("seconds");
-        secondsLeft = 10;
-        span.innerText = secondsLeft;
-        setInterval(myTimer, 1000); // every second
-        function myTimer() {
-            secondsLeft--;
-            span.innerText = secondsLeft;
-            if (secondsLeft == 0) {
-                window.location.reload();
-            }
-        }
-
         function load() {
             fetch("helpers/display_submissions.php")
                 .then(res => res.json())
@@ -39,9 +26,7 @@
                     const submissionsRow = document.getElementById("submissions");
                     const submissionsWithNames = data.submissions;
                     const goToVoting = data.goToVoting; // true or false
-                    if (goToVoting) {
-                        window.location.replace("/vote.php");
-                    }                    
+                    console.log("go to voting?",goToVoting);
                     submissionsWithNames.forEach(submissionWithName => {
                         const player = submissionWithName.name;
                         const submission = submissionWithName.submission;
@@ -55,6 +40,7 @@
                                 <div class="card p-2">
                                     <h3>${player}</h3>
                                     ${submissionP}
+                                    <input type="checkbox" id="${player}" name="vote" value="${player}">
                                 </div>
                             </div>
                         `;
