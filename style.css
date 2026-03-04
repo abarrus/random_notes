@@ -14,3 +14,7 @@ form {
 #err {
     color: red;
 }
+label:has(input:checked) {
+    color: blue;
+    background-color: aliceblue;
+}

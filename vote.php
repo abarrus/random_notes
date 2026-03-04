@@ -37,11 +37,11 @@
 
                         submissionsRow.innerHTML += `
                             <div class="col-6">
-                                <div class="card p-2">
+                                <label type="radio" for="${player}" class="card p-2">
                                     <h3>${player}</h3>
                                     ${submissionP}
-                                    <input type="checkbox" id="${player}" name="vote" value="${player}">
-                                </div>
+                                    <input type="radio" id="${player}" name="vote" value="${player}">
+                                </label>
                             </div>
                         `;
                     })
