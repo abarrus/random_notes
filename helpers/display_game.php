@@ -1,11 +1,5 @@
 <?php
 
-function display_players($gameId)
-{
-    $players = get_players($gameId);
-    echo ("Players: " . implode(", ", $players));
-}
-
 function display_game()
 {
     include "session.php";
@@ -17,8 +11,6 @@ function display_game()
 
     $gameId = $_SESSION["game_id"];
     $playerId = $_SESSION["player_id"];
-
-    display_players($gameId);
 
     echo ("<br>");
     echo ("player id: " . $playerId);
