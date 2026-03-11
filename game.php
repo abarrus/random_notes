@@ -11,8 +11,6 @@
 <body>
     <?php
     include "helpers/top.php";
-    include "helpers/display_game.php";
-    display_game();
     ?>
     <br>
     <div class="container">
