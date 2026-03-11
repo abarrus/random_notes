@@ -23,11 +23,20 @@ My Database Tables
 
 ### Players
 
-| COLUMN_NAME | TYPE         | NOTES |
+probably getting rid of this table soon
+| COLUMN_NAME | TYPE | NOTES |
 | ----------- | ------------ | ----- |
-| id          | char(16)     |       |
-| last_active | timestamp    |       |
-| name        | varchar(255) |       |
+| id | char(16) | |
+| last_active | timestamp | |
+| name | varchar(255) | |
+
+### GamePlayers
+
+| COLUMN_NAME | TYPE         | NOTES                                                           |
+| ----------- | ------------ | --------------------------------------------------------------- |
+| id          | char(16)     | can be multiple of the same, for same player in different games |
+| game_id     | char(16)     |                                                                 |
+| name        | varchar(255) |                                                                 |
 
 ### Moves
 
