@@ -18,5 +18,5 @@ make_game($gameName, $gameId);
 // TODO - go to game instead. can't have 2 headers.
 // this part of the code doesn't run yet btw
 join_game($gameId, $nickname);
-header("Location: /game.php");
+header("Location: /submission_write.php");
 exit;
