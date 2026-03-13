@@ -93,7 +93,7 @@ function clean_old_games()
 {
   $conn = connect();
 
-  // TODO: realistically the SQL should handle the second & third parts
+  // TODO: realistically the SQL should handle the 2nd, 3rd, and 4th deletes
   // if i set it up properly with:
   // FOREIGN KEY (game_id)
   // REFERENCES Games(game_id)
@@ -106,8 +106,10 @@ function clean_old_games()
     DELETE FROM Words WHERE game_id NOT IN (
       SELECT game_id FROM Games
     );
-
     DELETE FROM GamePlayers WHERE game_id NOT IN (
+      SELECT game_id FROM Games
+    );
+    DELETE FROM Moves WHERE game_id NOT IN (
       SELECT game_id FROM Games
     );
     ";
