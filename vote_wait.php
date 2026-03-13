@@ -10,10 +10,13 @@
 
 <body>
     <?php
+    include "helpers/confirm_or_redirect.php";
+    confirm_or_redirect("vote_wait");
+
     include "helpers/top.php";
     ?>
     <div class="main-content">
-        <p>Waiting for other players... refreshing in <span id="seconds"></span> seconds...</p>
+        <p>Waiting for other players to vote... refreshing in <span id="seconds"></span> seconds...</p>
         <p>If you want it faster just reload the page yourself but be warned the server gets mad</p>
         <div class="container-fluid">
             <div class="row g-3" id="submissions"></div>
@@ -33,28 +36,24 @@
         }
 
         function load() {
-            fetch("helpers/display_submissions.php")
+            fetch("helpers/display_votes.php")
                 .then(res => res.json())
                 .then(data => {
                     const submissionsRow = document.getElementById("submissions");
-                    const submissionsWithNames = data.submissions;
-                    const goToVoting = data.goToVoting; // true or false
-                    if (goToVoting) {
-                        window.location.replace("/vote.php");
-                    }                    
+                    const submissionsWithNames = data.votes;
                     submissionsWithNames.forEach(submissionWithName => {
                         const player = submissionWithName.name;
-                        const submission = submissionWithName.submission;
+                        const vote = submissionWithName.vote;
 
-                        const submissionP = submission == null ?
+                        const voteP = vote == null ?
                             `<p style="color:red;">EMPTY</p>` :
-                            `<p style='white-space:pre-wrap'>${submission}</p>`;
+                            `<p style='white-space:pre-wrap'>${vote}</p>`;
 
                         submissionsRow.innerHTML += `
                             <div class="col-6">
                                 <div class="card p-2">
                                     <h3>${player}</h3>
-                                    ${submissionP}
+                                    ${voteP}
                                 </div>
                             </div>
                         `;

@@ -17,7 +17,12 @@ function join_game($gameId, $nickname)
     $playerId = login($nickname);
     $_SESSION["game_id"] = $gameId;
 
+    if ($nickname == "") {
+        $nickname = "Player";
+    }
+
     if (!is_in_game($gameId, $playerId)) {
         give_starting_words($playerId, $gameId);
+        add_to_game($playerId, $gameId, $nickname);
     }
 }

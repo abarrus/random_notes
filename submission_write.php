@@ -10,6 +10,9 @@
 
 <body>
     <?php
+    include "helpers/confirm_or_redirect.php";
+    confirm_or_redirect("submission_write");
+
     include "helpers/top.php";
     ?>
     <br>

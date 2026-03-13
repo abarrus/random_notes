@@ -1,7 +1,7 @@
 <?php
 include "../helpers/db.php";
 
-$submission = $_POST["submission"];
+$vote = $_POST["vote"];
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -10,7 +10,7 @@ if (session_status() === PHP_SESSION_NONE) {
 $gameId = $_SESSION["game_id"];
 $playerId = $_SESSION["player_id"];
 
-submit_sentence($gameId, $playerId, $submission);
+submit_vote($gameId, $playerId, $vote);
 
-header("LOCATION: /submission_wait.php");
+header("LOCATION: /vote_wait.php");
 exit;

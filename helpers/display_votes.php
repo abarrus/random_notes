@@ -5,6 +5,8 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// TODO: this same kinda function is in display_submissions, should we combine them somehow?
+// or maybe combine the whole pages... they're not too different
 /**
  * Does $submissions have a submission from $playerName?
  * 
@@ -21,19 +23,20 @@ function containsPlayer($submissions, $playerId) {
 $gameId = $_SESSION["game_id"];
 $playerId = $_SESSION["player_id"];
 
-$submissions = get_submissions($gameId);
+$votes = get_votes($gameId);
 
 $players = get_players($gameId);
 
 foreach ($players as $player) {
     // use ($player) lets the function see $player, since that's outside its scope
-    if (!containsPlayer($submissions, $player["id"])) {
-        array_push($submissions, array("name"=>$player["name"], "id"=>$player["id"], "submission"=>null));
+    if (!containsPlayer($votes, $player["id"])) {
+        array_push($votes, array("name"=>$player["name"], "id"=>$player["id"], "vote"=>null));
     }
 }
 
 // send as JSON
 header('Content-Type: application/json');
-echo json_encode(array("submissions"=>$submissions));
+// TODO don't need vote in an outer array like that, it's cause we used to have goToVoting in the data
+echo json_encode(array("votes"=>$votes));
 
 exit;

@@ -11,33 +11,39 @@
 <body>
     <?php
     include "helpers/confirm_or_redirect.php";
-    confirm_or_redirect("vote");
+    confirm_or_redirect("submission_wait");
 
     include "helpers/top.php";
     ?>
     <div class="main-content">
-        <p>Vote for your favorite!</p>
-        <form action="/actions/submit_vote.php" method="POST">
-            <div class="container-fluid">
-                <div class="row g-3" id="submissions"></div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-        </form>
+        <p>Waiting for other players... refreshing in <span id="seconds"></span> seconds...</p>
+        <p>If you want it faster just reload the page yourself but be warned the server gets mad</p>
+        <div class="container-fluid">
+            <div class="row g-3" id="submissions"></div>
+        </div>
     </div>
     <script>
+        const span = document.getElementById("seconds");
+        secondsLeft = 10;
+        span.innerText = secondsLeft;
+        setInterval(myTimer, 1000); // every second
+        function myTimer() {
+            secondsLeft--;
+            span.innerText = secondsLeft;
+            if (secondsLeft == 0) {
+                window.location.reload();
+            }
+        }
+
         function load() {
             fetch("helpers/display_submissions.php")
                 .then(res => res.json())
                 .then(data => {
                     const submissionsRow = document.getElementById("submissions");
                     const submissionsWithNames = data.submissions;
-                    const goToVoting = data.goToVoting; // true or false
-                    console.log("go to voting?", goToVoting);
                     submissionsWithNames.forEach(submissionWithName => {
                         const player = submissionWithName.name;
                         const submission = submissionWithName.submission;
-                        const id = submissionWithName.id;
-                        console.log("submitted:", submissionWithName);
 
                         const submissionP = submission == null ?
                             `<p style="color:red;">EMPTY</p>` :
@@ -45,12 +51,10 @@
 
                         submissionsRow.innerHTML += `
                             <div class="col-6">
-                                <label type="radio" for="${id}" class="card p-2">
+                                <div class="card p-2">
                                     <h3>${player}</h3>
-                                    <p>${id}</p>
                                     ${submissionP}
-                                    <input type="radio" id="${id}" name="vote" value="${id}">
-                                </label>
+                                </div>
                             </div>
                         `;
                     })
