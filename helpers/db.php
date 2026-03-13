@@ -93,7 +93,7 @@ function clean_old_games()
 {
   $conn = connect();
 
-  // TODO: realistically the SQL should handle the second part
+  // TODO: realistically the SQL should handle the second & third parts
   // if i set it up properly with:
   // FOREIGN KEY (game_id)
   // REFERENCES Games(game_id)
@@ -104,6 +104,10 @@ function clean_old_games()
     WHERE last_changed < NOW() - INTERVAL 1 DAY;
 
     DELETE FROM Words WHERE game_id NOT IN (
+      SELECT game_id FROM Games
+    );
+
+    DELETE FROM GamePlayers WHERE game_id NOT IN (
       SELECT game_id FROM Games
     );
     ";
