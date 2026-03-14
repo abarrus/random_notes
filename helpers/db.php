@@ -219,18 +219,23 @@ function get_game_name($gameId)
 }
 
 /**
- * If there's a prompt for the current round, and who is the prompter.
+ * The prompt for the current round, and who is the prompter.
  * 
  * @param gameId 16-char game ID
  * @return array{
- *      hasPrompt: boolean
+ *      prompt: string|null
  *      prompter: string (16-char player id)
  * }
  */
 function get_prompt_info($gameId)
 {
-  // TODO TODO TODO THIS IS NONSENSE
-  return array("hasPrompt" => true, "prompter" => "shdfghsghjasd");
+  $conn = connect();
+
+  $sql = "SELECT prompt, prompter FROM Games WHERE id=?";
+  $stmt = $conn->prepare($sql);
+  $stmt->execute([$gameId]);
+
+  return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
 /**

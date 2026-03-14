@@ -23,7 +23,7 @@ function get_page() {
 
     // is there a prompt?
     $prompt_info = get_prompt_info($gameId);
-    if (!$prompt_info["hasPrompt"]) {
+    if ($prompt_info["prompt"] == null) {
         // if no prompt: are you the prompter?
         if ($prompt_info["prompter"] == $playerId) {
             return "prompt_write";
