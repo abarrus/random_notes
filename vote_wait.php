@@ -17,9 +17,22 @@
     include "helpers/top.php";
     ?>
     <div class="main-content">
-        <p>Waiting for other players to vote... refreshing in <span id="seconds"></span> seconds...</p>
-        <p>If you want it faster just reload the page yourself but be warned the server gets mad</p>
+        <div class="alert alert-info">
+            Waiting for other players to vote...Refreshing in <span id="seconds" class="fw-bold"></span> seconds...
+            <br>
+            If you want it faster just reload the page yourself but be warned the server gets mad
+        </div>
         <div class="container-fluid">
+            <div class="row">
+                <div class="col-6">
+                    <h5 class="text-success border-bottom pb-2">Voted</h5>
+                    <div id="voted-list" class="list-group"></div>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="text-warning border-bottom pb-2">Still Deciding...</h5>
+                    <div id="waiting-list" class="list-group"></div>
+                </div>
+            </div>
             <div class="row g-3" id="submissions"></div>
         </div>
     </div>
@@ -40,24 +53,28 @@
             fetch("helpers/display_votes.php")
                 .then(res => res.json())
                 .then(data => {
-                    const submissionsRow = document.getElementById("submissions");
+                    const votedList = document.getElementById("voted-list");
+                    const waitingList = document.getElementById("waiting-list");
                     const submissionsWithNames = data.votes;
                     submissionsWithNames.forEach(submissionWithName => {
                         const player = submissionWithName.name;
-                        const vote = submissionWithName.vote;
+                        const hasVoted = submissionWithName.vote == null;
 
-                        const voteP = vote == null ?
-                            `<p style="color:red;">EMPTY</p>` :
-                            `<p style='white-space:pre-wrap'>${vote}</p>`;
-
-                        submissionsRow.innerHTML += `
-                            <div class="col-6">
-                                <div class="card p-2">
-                                    <h3>${player}</h3>
-                                    ${voteP}
-                                </div>
-                            </div>
-                        `;
+                        if (hasVoted) {
+                            // Item for those who have voted
+                            votedList.innerHTML += `
+                                <div class="list-group-item d-flex justify-content-between align-items-center list-group-item-success">
+                                    <span class="fw-bold">${player}</span>
+                                    <span class="badge bg-success rounded-pill">Ready</span>
+                                </div>`;
+                        } else {
+                            // Item for those we are waiting for
+                            waitingList.innerHTML += `
+                                <div class="list-group-item d-flex justify-content-between align-items-center opacity-75">
+                                    <span>${player}</span>
+                                    <span class="badge bg-warning rounded-pill">Hurry Up</span>
+                                </div>`;
+                        }
                     })
                 })
         }
