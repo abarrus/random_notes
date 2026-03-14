@@ -392,3 +392,13 @@ function set_prompt($gameId, $prompt) {
   $stmt = $conn->prepare($sql);
   $stmt->execute([$prompt, $gameId]);
 }
+
+function get_name_from_id($gameId, $playerId) {
+  $conn = connect();
+
+  $sql = "SELECT name FROM GamePlayers WHERE game_id = ? AND id = ?";
+  $stmt = $conn->prepare($sql);
+  $stmt->execute([$gameId, $playerId]);
+
+  return $stmt->fetchColumn();
+}
