@@ -6,6 +6,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- my styles -->
     <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
@@ -17,32 +18,26 @@
     ?>
     <div class="main-content">
         <h2>Prompt:</h2>
-        <p id="prompt">Prompt goes here...</p>
+        <p id="prompt"></p>
         <h2>Your Submission:</h2>
-        <div class="container-fluid">
-            <form method="POST" action="actions/submit_words.php">
-                <div class="row">
-                    <textarea name="submission" class="form-control" id="myText" class="w-100" rows="1" aria-describedby="submission" placeholder="Write submission here..."></textarea>
-                </div>
-                <div class="row">
-                    <p id="err"></p>
-                </div>
+        <form method="POST" action="actions/submit_words.php">
+            <textarea name="submission" class="form-control" id="myText" class="w-100" rows="1" aria-describedby="submission" placeholder="Write submission here..."></textarea>
+            <p id="err"></p>
+            <div class="container-fluid">
                 <!-- g-3 = gap between rows 1rem -->
                 <div class="row g-3" id="words-container"></div>
-                <hr>
-                <button class="btn btn-success" onclick="submit()">Submit</button>
-            </form>
-            <hr>
-            <div class="row mt-3">
-                <p class="mb-0">Notes:</p>
-                <ul>
-                    <li>You don't have to use all words.</li>
-                    <li>No duplicates (unless you actually have multiple of a word).</li>
-                    <li> No special characters or numbers.</li>
-                    <li>You can add whatever whitespace you want.</li>
-                </ul>
             </div>
-        </div>
+            <hr>
+            <button class="btn btn-success" onclick="submit()">Submit</button>
+        </form>
+        <hr>
+        <p class="mb-0">Notes:</p>
+        <ul>
+            <li>You don't have to use all words.</li>
+            <li>No duplicates (unless you actually have multiple of a word).</li>
+            <li> No special characters or numbers.</li>
+            <li>You can add whatever whitespace you want.</li>
+        </ul>
     </div>
     <script>
         words = [];
@@ -53,7 +48,7 @@
             container.innerHTML = "";
             unusedWords.forEach(word => {
                 container.innerHTML += `
-                    <div class="col-4">
+                    <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
                         <button class="btn btn-primary w-100" onclick="addWord('${word}')">
                             ${word}
                         </button>
