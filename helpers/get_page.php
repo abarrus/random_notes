@@ -19,6 +19,7 @@ function get_page() {
         session_start();
     }
 
+    // redirects to home page if you go to a game page without being "logged in"
     if (!isset($_SESSION["game_id"]) || !isset($_SESSION["player_id"])) {
         header("LOCATION: /");
         exit;
