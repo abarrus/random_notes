@@ -1,2 +1,2 @@
 <?php
-$numStartWords = 20;
+$numStartWords = 30;
