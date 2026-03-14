@@ -14,12 +14,21 @@ php conventions:
 My Database Tables
 
 ### Words
+Which words players in games have
 
 | COLUMN_NAME | TYPE         | NOTES |
 | ----------- | ------------ | ----- |
 | game_id     | char(16)     |       |
 | player_id   | char(16)     |       |
 | word        | varchar(255) |       |
+
+
+### AllWords
+ALL the words, the lists to pick random words from
+| COLUMN_NAME | TYPE         | NOTES |
+| ----------- | ------------ | ----- |
+| word     | varchar(255)     |       |
+| category   | enum    | 'nouns', 'verbs', 'adjectives', 'other' |
 
 ### Players
 

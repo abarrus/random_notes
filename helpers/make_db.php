@@ -21,7 +21,7 @@ $tables = [
     "GamePlayers" => "CREATE TABLE IF NOT EXISTS GamePlayers (
         id CHAR(16),
         game_id CHAR(16),
-        name VARCHAR(255),
+        name VARCHAR(255)
     )",
 
     "Moves" => "CREATE TABLE IF NOT EXISTS Moves (
@@ -29,7 +29,7 @@ $tables = [
         player_id CHAR(16),
         submission VARCHAR(1000),
         vote CHAR(16),
-        round SMALLINT,
+        round SMALLINT
     )",
 
     "Games" => "CREATE TABLE IF NOT EXISTS Games (
@@ -40,16 +40,40 @@ $tables = [
         round SMALLINT DEFAULT 0,
         prompt VARCHAR(1000),
         prompter CHAR(16)
+    )",
+
+    "AllWords" => "CREATE TABLE IF NOT EXISTS AllWords (
+        word VARCHAR(255),
+        category ENUM('nouns', 'verbs', 'adjectives', 'other')
     )"
 ];
 
 $conn = connect();
 
+// make and truncate tables
 foreach ($tables as $name => $sql) {
     try {
         $conn->exec($sql);
-        echo "Table $name is ready.\n";
+
+        // clear old entries if the table already existed
+        $conn->exec("TRUNCATE TABLE " . $name);
+
+        echo "Table $name is ready.<br>";
     } catch (PDOException $e) {
-        echo "Error creating $name: " . $e->getMessage() . "\n";
+        echo "Error creating $name: " . $e->getMessage() . "<br>";
     }
 }
+
+// fill words table
+$categories = array("adjectives", "nouns", "verbs", "other");
+foreach ($categories as $cat) {
+    $wordsJson = file_get_contents(__DIR__ . "/../words/" . $cat . ".json");
+    $words = json_decode($wordsJson);
+
+    $sql = "INSERT INTO AllWords (word, category) VALUES (?, ?)";
+    $stmt = $conn->prepare($sql);
+    foreach($words as $word) {
+        $stmt->execute([$word, $cat]);
+    }
+}
+echo "Done adding all words.";
