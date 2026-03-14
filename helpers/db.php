@@ -124,6 +124,15 @@ function get_games()
   return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+/**
+ * Get names and IDs of players in a particular game
+ * 
+ * @param gameId 16-char game ID
+ * @return list<array{
+ *    name: string,
+ *    id: string
+ * }>
+ */
 function get_players($gameId)
 {
   $conn = connect();
@@ -355,10 +364,18 @@ function get_results($gameId)
 
 function get_prompt($gameId) {
   $conn = connect();
-  
+
   $sql = "SELECT prompt FROM Games WHERE id=?";
   $stmt = $conn->prepare($sql);
   $stmt->execute([$gameId]);
 
   return $stmt->fetchColumn();
+}
+
+function set_prompter($gameId, $prompterId) {
+    $conn = connect();
+
+    $sql = "UPDATE Games SET prompter = ? WHERE id=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$prompterId, $gameId]);
 }

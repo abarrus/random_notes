@@ -2,6 +2,7 @@
 
 require_once '../helpers/db.php';
 include "../helpers/join_game.php";
+include "../helpers/random_prompter.php";
 
 $nickname = $_POST["nickname"];
 $gameName = $_POST["game-name"];
@@ -16,5 +17,6 @@ $gameId = bin2hex(random_bytes(8)); // 16-char hex
 make_game($gameName, $gameId);
 
 join_game($gameId, $nickname);
+random_prompter($gameId);
 header("Location: /submission_write.php");
 exit;
