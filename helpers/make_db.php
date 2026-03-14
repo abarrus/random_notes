@@ -45,6 +45,10 @@ $tables = [
     "AllWords" => "CREATE TABLE IF NOT EXISTS AllWords (
         word VARCHAR(255),
         category ENUM('nouns', 'verbs', 'adjectives', 'other')
+    )",
+
+    "Prompts" => "CREATE TABLE IF NOT EXISTS Prompts (
+        prompt VARCHAR(1000)
     )"
 ];
 
@@ -72,8 +76,19 @@ foreach ($categories as $cat) {
 
     $sql = "INSERT INTO AllWords (word, category) VALUES (?, ?)";
     $stmt = $conn->prepare($sql);
-    foreach($words as $word) {
+    foreach ($words as $word) {
         $stmt->execute([$word, $cat]);
     }
 }
-echo "Done adding all words.";
+echo "Done adding all words.<br>";
+
+// fill prompts table
+$promptsJson = file_get_contents(__DIR__ . "/../words/prompts.json");
+$prompts = json_decode($promptsJson);
+
+$sql = "INSERT INTO Prompts (prompt) VALUES (?)";
+$stmt = $conn->prepare($sql);
+foreach ($prompts as $prompt) {
+    $stmt->execute([$prompt]);
+}
+echo "Done adding all prompts.<br>";

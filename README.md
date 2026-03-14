@@ -14,6 +14,7 @@ php conventions:
 My Database Tables
 
 ### Words
+
 Which words players in games have
 
 | COLUMN_NAME | TYPE         | NOTES |
@@ -22,13 +23,21 @@ Which words players in games have
 | player_id   | char(16)     |       |
 | word        | varchar(255) |       |
 
-
 ### AllWords
+
 ALL the words, the lists to pick random words from
-| COLUMN_NAME | TYPE         | NOTES |
+| COLUMN_NAME | TYPE | NOTES |
 | ----------- | ------------ | ----- |
-| word     | varchar(255)     |       |
-| category   | enum    | 'nouns', 'verbs', 'adjectives', 'other' |
+| word | varchar(255) | |
+| category | enum | 'nouns', 'verbs', 'adjectives', 'other' |
+
+### Prompts
+
+Pick a random prompt from here
+
+| COLUMN_NAME | TYPE          | NOTES |
+| ----------- | ------------- | ----- |
+| prompt      | varchar(1000) |       |
 
 ### Players
 
