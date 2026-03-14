@@ -35,8 +35,6 @@
                 .then(data => {
                     const submissionsRow = document.getElementById("submissions");
                     const submissionsWithNames = data.submissions;
-                    const goToVoting = data.goToVoting; // true or false
-                    console.log("go to voting?", goToVoting);
                     submissionsWithNames.forEach(submissionWithName => {
                         const player = submissionWithName.name;
                         const submission = submissionWithName.submission;
