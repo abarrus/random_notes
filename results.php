@@ -19,10 +19,9 @@
     ?>
     <div class="main-content">
         <h1 class="text-center m-3">Results!</h1>
-        <div class="card p-3 my-4">
+        <div class="card p-3 my-4 mb-5">
             <p class="p-0 m-0"><?= prompt() ?></p>
         </div>
-        <hr class="mb-5">
         <div id="results"></div>
     </div>
     <script>
