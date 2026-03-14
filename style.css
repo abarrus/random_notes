@@ -1,20 +1,35 @@
 .main-content {
-    padding: 2rem;
+  padding: 2rem;
 }
 form {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 .form-group {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 .word {
-    background-color: aliceblue;
-    border: 1px solid black;
+  background-color: aliceblue;
+  border: 1px solid black;
 }
 #err {
-    color: red;
+  color: red;
 }
 label:has(input:checked) {
-    color: blue;
-    background-color: aliceblue;
+  color: blue;
+  background-color: aliceblue;
+}
+.italic-title {
+  font-style: italic;
+  text-shadow: 2px 2px 0px #0d6efd;
+}
+.btn-join {
+  border: 1px solid #dee2e6;
+  background: white;
+  transition: all 0.2s;
+}
+.btn-join:hover {
+  border-color: #0d6efd;
+  background: #f8fbff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }

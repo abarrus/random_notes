@@ -10,34 +10,31 @@
 </head>
 
 <body>
-    <h1>Random Notes!</h1>
-    <div class="main-content">
-        <form method="POST" action="actions/create_game.php">
-            <div class="form-group">
-                <label for="nickname">Your Nickname:</label>
-                <input type="text" class="form-control" name="nickname" aria-describedby="yourNickname" placeholder="Name here...">
+
+    <form method="POST" action="actions/create_game.php" class="d-flex flex-column min-vh-100">
+        <div class="bg-dark text-light p-3 text-center p-5">
+            <h1 class="display-3 italic-title fw-bold mb-5">Random Notes!</h1>
+            <div class="col-md-4 mx-auto">
+                <input type="text" class="form-control" name="nickname" aria-describedby="yourNickname" placeholder="Your Nickname...">
             </div>
-            <div class="card container-fluid overflow-hidden text-center">
-                <div class="row">
-                    <!-- Make Game half -->
-                    <div class="col-12 col-md-6 bg-light py-4">
-                        <h2>Make Game</h2>
-                        <hr>
-                        <input type="text" class="form-control mb-2" name="game-name" aria-describedby="gameName" placeholder="Name here...">
-                        <button type="submit" class="btn btn-primary">Make Game</button>
-                    </div>
-                    <!-- Join Game half -->
-                    <div class="col-12 col-md-6 bg-dark text-light py-4">
-                        <h2>Join Game</h2>
-                        <hr>
-                        <div id="games">
-                        </div>
-                    </div>
+        </div>
+        <div class="row text-center flex-grow-1">
+            <!-- Make Game half -->
+            <div class="col-md-6 py-4 border-end d-flex flex-column align-items-center"> <!-- border-end puts line b/w the two halves -->
+                <h2>Create</h2>
+                <div class="col-8">
+                    <input type="text" class="form-control mb-2" name="game-name" aria-describedby="gameName" placeholder="Name here...">
+                    <button type="submit" class="btn btn-primary w-100">Make Game</button>
                 </div>
-                <!-- end card -->
             </div>
-        </form>
-    </div>
+            <!-- Join Game half -->
+            <div class="col-md-6 bg-light text-dark py-4 d-flex flex-column align-items-center">
+                <h2>Join</h2>
+                <div id="games" class="col-8">
+                </div>
+            </div>
+        </div>
+    </form>
     <script>
         function loadGames() {
             function addGameToList(id, name, container) {
@@ -45,9 +42,9 @@
                 <div class="row p-2">
                     <button
                         name="id" value="${id}"
-                        class="btn btn-dark border-light mb-1"
+                        class="btn btn-join mb-1 d-flex justify-content-between"
                         type="submit" formaction="actions/join_game_form.php"
-                    >${name}</button>
+                    ><span class="fw-bold">${name}</span><span class="text-muted">Join →</span></button>
                 </div>`;
             }
 

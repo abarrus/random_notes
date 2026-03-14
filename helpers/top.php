@@ -13,7 +13,13 @@ $gameName = get_game_name($gameId);
 
 echo <<<EOD
 <div class="bg-dark text-light p-3 d-flex justify-content-between">
-    <span>$playerName</span>
-    <span>$gameName</span>
+    <div>
+        <span class="d-block small text-secondary text-uppercase">Your name</span>
+        <span>$playerName</span>
+    </div>
+    <div>
+        <span class="d-block small text-secondary text-uppercase">game name</span>
+        <span>$gameName</span>
+    </div>
 </div>
 EOD;
