@@ -43,20 +43,15 @@
                         const id = submissionWithName.id;
                         console.log("submitted:", submissionWithName);
 
-                        const submissionP = "<p class='mb-0 style='" + (submission == null ?
-                            `color:red;'>EMPTY</p>` :
-                            `white-space:pre-wrap'>${submission}</p>`);
-
                         submissionsRow.innerHTML += `
                             <label type="radio" for="${id}" class="card p-2 d-flex flex-row align-items-center mb-3">
                                 <input class="me-3" type="radio" id="${id}" name="vote" value="${id}" required>
-                                ${submissionP}
+                                <p class="mb-0" style="white-space:pre-wrap">${submission}</p>
                             </label>
                         `;
                     })
                 })
         }
-
         load();
     </script>
 </body>
