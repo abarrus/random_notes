@@ -22,7 +22,7 @@
         <div class="container-fluid">
             <form method="POST" action="actions/submit_words.php">
                 <div class="row">
-                    <textarea name="submission" id="myText" class="w-100" rows="1"></textarea>
+                    <textarea name="submission" class="form-control" id="myText" class="w-100" rows="1" aria-describedby="submission" placeholder="Write submission here..."></textarea>
                 </div>
                 <div class="row">
                     <p id="err"></p>
