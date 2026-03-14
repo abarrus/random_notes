@@ -15,9 +15,13 @@
     confirm_or_redirect("results");
 
     include "helpers/top.php";
+    include "helpers/get_prompt.php";
     ?>
     <div class="main-content">
         <h1 class="text-center m-3">Results!</h1>
+        <div class="card p-3 my-4">
+            <p class="p-0 m-0"><?= prompt() ?></p>
+        </div>
         <hr class="mb-5">
         <div id="results"></div>
     </div>
