@@ -25,9 +25,7 @@
         <form method="POST" action="actions/submit_words.php">
             <textarea required name="submission" class="form-control" id="myText" class="w-100" rows="1" aria-describedby="submission" placeholder="Write submission here..."></textarea>
             <p id="err"></p>
-            <div class="container-fluid">
-                <!-- g-3 = gap between rows 1rem -->
-                <div class="row g-3" id="words-container"></div>
+            <div class="d-flex flex-wrap gap-3" id="words-container">
             </div>
             <hr>
             <button class="btn btn-success" type="submit">Submit</button>
@@ -42,6 +40,7 @@
         </ul>
     </div>
     <script>
+        // each word has a color and shape
         words = [];
         unusedWords = [];
 
@@ -49,13 +48,27 @@
             container = document.getElementById("words-container");
             container.innerHTML = "";
             unusedWords.forEach(word => {
+                const wordData = words.find(w=>w.text==word)
                 container.innerHTML += `
-                    <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
-                        <button class="btn btn-primary w-100" onclick="addWord('${word}')">
-                            ${word}
-                        </button>
-                    </div>`;
+                    <button style="background-color: ${wordData.color}; border: 1px solid color-mix(in oklab, ${wordData.color}, black 25%)" class="btn text-dark" onclick="addWord('${word}')">
+                        ${word}
+                    </button>`
             });
+        }
+
+        // make words list with random colors and shapes
+        // give it just a regular list of words
+        function initializeWordsList(wordsToAdd) {
+            const colors = ["#ccd5ae", "#e9edc9", "#fefae0", "#faedcd", "#d4a373"];
+            // a subset of colors
+            const shapes = ["round", "square"];
+            
+            wordsToAdd.forEach(word => {
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
+                words.push({text: word, color: randomColor, shape: randomShape});
+            })
+            console.log(words);
         }
 
         function load() {
@@ -63,7 +76,7 @@
                 .then(res => res.json())
                 .then(data => {
                     unusedWords = [...data];
-                    words = data; // words is global var
+                    initializeWordsList(data);
                     updateWordsHTML();
                 })
         }
@@ -101,7 +114,7 @@
 
             valid = true;
 
-            unusedWords = [...words];
+            unusedWords = words.map(obj => obj.text);
 
             err = document.getElementById("err");
 
