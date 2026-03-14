@@ -102,8 +102,8 @@
             updateWordsHTML();
         }
 
-        function wordIsInList(wordToCheck, listToCheck) {
-            return listToCheck.some(wordInWords => wordToCheck.toLowerCase() === wordInWords.toLowerCase());
+        function wordIsInList(wordToCheck) {
+            return words.some(obj => wordToCheck.toLowerCase() === obj.text.toLowerCase());
         }
 
         ta.addEventListener('input', () => {
