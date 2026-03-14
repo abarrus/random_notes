@@ -58,7 +58,7 @@
                     const submissionsWithNames = data.votes;
                     submissionsWithNames.forEach(submissionWithName => {
                         const player = submissionWithName.name;
-                        const hasVoted = submissionWithName.vote == null;
+                        const hasVoted = submissionWithName.vote != null;
 
                         if (hasVoted) {
                             // Item for those who have voted
