@@ -352,3 +352,13 @@ function get_results($gameId)
 
   return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+function get_prompt($gameId) {
+  $conn = connect();
+  
+  $sql = "SELECT prompt FROM Games WHERE id=?";
+  $stmt = $conn->prepare($sql);
+  $stmt->execute([$gameId]);
+
+  return $stmt->fetchColumn();
+}

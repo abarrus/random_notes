@@ -15,32 +15,33 @@
 
     include "helpers/top.php";
     ?>
-    <br>
-    <div class="container">
-        <div class="row">
-            <h2>Your Submission:</h2>
-        </div>
-        <form method="POST" action="actions/submit_words.php">
-            <div class="row">
-                <textarea name="submission" id="myText" class="w-100" rows="1"></textarea>
-            </div>
-            <div class="row">
-                <p id="err"></p>
-            </div>
-            <!-- g-3 = gap between rows 1rem -->
-            <div class="row g-3" id="words-container"></div>
+    <div class="main-content">
+        <h2>Prompt:</h2>
+        <p id="prompt">Prompt goes here...</p>
+        <h2>Your Submission:</h2>
+        <div class="container-fluid">
+            <form method="POST" action="actions/submit_words.php">
+                <div class="row">
+                    <textarea name="submission" id="myText" class="w-100" rows="1"></textarea>
+                </div>
+                <div class="row">
+                    <p id="err"></p>
+                </div>
+                <!-- g-3 = gap between rows 1rem -->
+                <div class="row g-3" id="words-container"></div>
+                <hr>
+                <button class="btn btn-success" onclick="submit()">Submit</button>
+            </form>
             <hr>
-            <button class="btn btn-success" onclick="submit()">Submit</button>
-        </form>
-        <hr>
-        <div class="row mt-3">
-            <p class="mb-0">Notes:</p>
-            <ul>
-                <li>You don't have to use all words.</li>
-                <li>No duplicates (unless you actually have multiple of a word).</li>
-                <li> No special characters or numbers.</li>
-                <li>You can add whatever whitespace you want.</li>
-            </ul>
+            <div class="row mt-3">
+                <p class="mb-0">Notes:</p>
+                <ul>
+                    <li>You don't have to use all words.</li>
+                    <li>No duplicates (unless you actually have multiple of a word).</li>
+                    <li> No special characters or numbers.</li>
+                    <li>You can add whatever whitespace you want.</li>
+                </ul>
+            </div>
         </div>
     </div>
     <script>
@@ -64,10 +65,16 @@
             fetch("helpers/get_words.php")
                 .then(res => res.json())
                 .then(data => {
-                    words = data;
-                    unusedWords = [...words];
+                    unusedWords = [...data];
+                    words = data; // words is global var
                     updateWordsHTML();
                 })
+            fetch("helpers/get_prompt.php")
+                .then(res => res.json())
+                .then(prompt => {
+                    const p = document.getElementById("prompt");
+                    p.innerText = prompt;
+                });
         }
 
         load();

@@ -37,7 +37,9 @@ $tables = [
         last_changed TIMESTAMP,
         name VARCHAR(255),
         status ENUM('open', 'closed') DEFAULT 'open',
-        round SMALLINT DEFAULT 0
+        round SMALLINT DEFAULT 0,
+        prompt VARCHAR(1000),
+        prompter CHAR(16)
     )"
 ];
 
