@@ -21,14 +21,14 @@
         <p id="prompt"></p>
         <h2>Your Submission:</h2>
         <form method="POST" action="actions/submit_words.php">
-            <textarea name="submission" class="form-control" id="myText" class="w-100" rows="1" aria-describedby="submission" placeholder="Write submission here..."></textarea>
+            <textarea required name="submission" class="form-control" id="myText" class="w-100" rows="1" aria-describedby="submission" placeholder="Write submission here..."></textarea>
             <p id="err"></p>
             <div class="container-fluid">
                 <!-- g-3 = gap between rows 1rem -->
                 <div class="row g-3" id="words-container"></div>
             </div>
             <hr>
-            <button class="btn btn-success" onclick="submit()">Submit</button>
+            <button class="btn btn-success" type="submit">Submit</button>
         </form>
         <hr>
         <p class="mb-0">Notes:</p>

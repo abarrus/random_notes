@@ -19,8 +19,8 @@
     <div class="main-content">
         <h2>Prompt:</h2>
         <form method="POST" action="actions/submit_prompt.php">
-            <textarea class="form-control" name="prompt" id="myText" class="w-100" aria-describedby="prompt" placeholder="Write prompt here..."></textarea>
-            <button class="btn btn-success" onclick="submit()">Submit</button>
+            <textarea required class="form-control" name="prompt" id="myText" class="w-100" aria-describedby="prompt" placeholder="Write prompt here..."></textarea>
+            <button class="btn btn-success" type="submit">Submit</button>
         </form>
         <button class="btn btn-primary" onclick="getRandomPrompt()">Random Prompt</button>
     </div>
