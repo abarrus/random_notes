@@ -18,6 +18,12 @@ function get_page() {
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
+
+    if (!isset($_SESSION["game_id"]) || !isset($_SESSION["player_id"])) {
+        header("LOCATION: /");
+        exit;
+    }
+
     $gameId = $_SESSION["game_id"];
     $playerId = $_SESSION["player_id"];
 
