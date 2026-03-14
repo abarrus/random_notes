@@ -384,3 +384,11 @@ function set_prompter($gameId, $prompterId) {
     $stmt = $conn->prepare($sql);
     $stmt->execute([$prompterId, $gameId]);
 }
+
+function set_prompt($gameId, $prompt) {
+  $conn = connect();
+
+  $sql = "UPDATE Games SET prompt = ? WHERE id=?";
+  $stmt = $conn->prepare($sql);
+  $stmt->execute([$prompt, $gameId]);
+}
