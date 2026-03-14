@@ -15,14 +15,17 @@
     confirm_or_redirect("vote");
 
     include "helpers/top.php";
+    include "helpers/get_prompt.php";
     ?>
     <div class="main-content">
+        <h2>Prompt:</h2>
+        <div class="card p-3 my-4">
+            <p class="p-0 m-0"><?= prompt() ?></p>
+        </div>
         <p>Vote for your favorite!</p>
         <form action="/actions/submit_vote.php" method="POST">
-            <div class="container-fluid">
-                <div class="row g-3" id="submissions"></div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
+            <div id="submissions"></div>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
     <script>
@@ -40,19 +43,15 @@
                         const id = submissionWithName.id;
                         console.log("submitted:", submissionWithName);
 
-                        const submissionP = submission == null ?
-                            `<p style="color:red;">EMPTY</p>` :
-                            `<p style='white-space:pre-wrap'>${submission}</p>`;
+                        const submissionP = "<p class='mb-0 style='" + (submission == null ?
+                            `color:red;'>EMPTY</p>` :
+                            `white-space:pre-wrap'>${submission}</p>`);
 
                         submissionsRow.innerHTML += `
-                            <div class="col-6">
-                                <label type="radio" for="${id}" class="card p-2">
-                                    <h3>${player}</h3>
-                                    <p>${id}</p>
-                                    ${submissionP}
-                                    <input type="radio" id="${id}" name="vote" value="${id}">
-                                </label>
-                            </div>
+                            <label type="radio" for="${id}" class="card p-2 d-flex flex-row align-items-center mb-3">
+                                <input class="me-3" type="radio" id="${id}" name="vote" value="${id}" required>
+                                ${submissionP}
+                            </label>
                         `;
                     })
                 })

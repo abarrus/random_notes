@@ -15,10 +15,12 @@
     confirm_or_redirect("submission_write");
 
     include "helpers/top.php";
+
+    include "helpers/get_prompt.php";
     ?>
     <div class="main-content">
         <h2>Prompt:</h2>
-        <p id="prompt"></p>
+        <p><?=  prompt() ?></p>
         <h2>Your Submission:</h2>
         <form method="POST" action="actions/submit_words.php">
             <textarea required name="submission" class="form-control" id="myText" class="w-100" rows="1" aria-describedby="submission" placeholder="Write submission here..."></textarea>
@@ -64,12 +66,6 @@
                     words = data; // words is global var
                     updateWordsHTML();
                 })
-            fetch("helpers/get_prompt.php")
-                .then(res => res.json())
-                .then(prompt => {
-                    const p = document.getElementById("prompt");
-                    p.innerText = prompt;
-                });
         }
 
         load();
