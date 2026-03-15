@@ -22,7 +22,7 @@
         <h2>Prompt:</h2>
         <p><?=  prompt() ?></p>
         <h2>Your Submission:</h2>
-        <form method="POST" action="actions/submit_words.php">
+        <form method="POST" action="actions/submit_words.php" id="myForm">
             <textarea required name="submission" class="form-control" id="myText" class="w-100" rows="1" aria-describedby="submission" placeholder="Write submission here..."></textarea>
             <p id="err"></p>
             <div class="d-flex flex-wrap gap-3" id="words-container">
@@ -159,6 +159,15 @@
 
             updateWordsHTML();
         });
+
+        const form = document.getElementById("myForm");
+        form.addEventListener('submit', e => {
+            err = document.getElementById("err");
+            if (err.textContent != "") {
+                e.preventDefault();
+                alert("Can't submit, there's invalid or duplicate words");
+            }
+        })
     </script>
 </body>
 
