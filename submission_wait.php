@@ -17,8 +17,23 @@
     include "helpers/top.php";
     ?>
     <div class="main-content">
-        <p>Waiting for other players... refreshing in <span id="seconds"></span> seconds...</p>
-        <p>If you want it faster just reload the page yourself but be warned the server gets mad</p>
+        <div class="alert alert-info">
+            <p>Waiting for other players... refreshing in <span id="seconds"></span> seconds...</p>
+            <p class="mb-0">If you want it faster just reload the page yourself but be warned the server gets mad</p>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-6">
+                    <h5 class="text-success border-bottom pb-2">Submitted</h5>
+                    <div id="voted-list" class="list-group"></div>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="text-warning border-bottom pb-2">Still Writing...</h5>
+                    <div id="waiting-list" class="list-group"></div>
+                </div>
+            </div>
+            <div class="row g-3" id="submissions"></div>
+        </div>
         <div class="container-fluid">
             <div class="row g-3" id="submissions"></div>
         </div>
@@ -40,24 +55,29 @@
             fetch("helpers/display_submissions.php")
                 .then(res => res.json())
                 .then(data => {
-                    const submissionsRow = document.getElementById("submissions");
+                    const votedList = document.getElementById("voted-list");
+                    const waitingList = document.getElementById("waiting-list");
+
                     const submissionsWithNames = data.submissions;
                     submissionsWithNames.forEach(submissionWithName => {
                         const player = submissionWithName.name;
-                        const submission = submissionWithName.submission;
+                        const hasSubmitted = submissionWithName.submission != null;
 
-                        const submissionP = submission == null ?
-                            `<p style="color:red;">EMPTY</p>` :
-                            `<p style='white-space:pre-wrap'>${submission}</p>`;
-
-                        submissionsRow.innerHTML += `
-                            <div class="col-6">
-                                <div class="card p-2">
-                                    <h3>${player}</h3>
-                                    ${submissionP}
-                                </div>
-                            </div>
-                        `;
+                        if (hasSubmitted) {
+                            // Item for those who have voted
+                            votedList.innerHTML += `
+                                <div class="list-group-item d-flex justify-content-between align-items-center list-group-item-success">
+                                    <span class="fw-bold">${player}</span>
+                                    <span class="badge bg-success rounded-pill">Ready</span>
+                                </div>`;
+                        } else {
+                            // Item for those we are waiting for
+                            waitingList.innerHTML += `
+                                <div class="list-group-item d-flex justify-content-between align-items-center opacity-75">
+                                    <span>${player}</span>
+                                    <span class="badge bg-warning rounded-pill">Hurry Up</span>
+                                </div>`;
+                        }
                     })
                 })
         }
