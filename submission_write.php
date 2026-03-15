@@ -68,7 +68,6 @@
                 const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
                 words.push({text: word, color: randomColor, shape: randomShape});
             })
-            console.log(words);
         }
 
         function load() {
@@ -102,7 +101,7 @@
             updateWordsHTML();
         }
 
-        function wordIsInList(wordToCheck) {
+        function wordIsInWords(wordToCheck) {
             return words.some(obj => wordToCheck.toLowerCase() === obj.text.toLowerCase());
         }
 
@@ -124,9 +123,9 @@
             text.forEach(word => {
                 if (word === "") return;
 
-                if (!wordIsInList(word, unusedWords)) {
+                if (!unusedWords.includes(word)) {
                     valid = false;
-                    if (wordIsInList(word, words)) {
+                    if (wordIsInWords(word)) {
                         duplicateWords.push(word);
                     } else {
                         invalidWords.push(word);
