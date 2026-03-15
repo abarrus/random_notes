@@ -17,6 +17,7 @@ echo <<<EOD
         <span class="d-block small text-secondary text-uppercase">Your name</span>
         <span>$playerName</span>
     </div>
+    <a href="/" class="display-6 italic-title fw-bold">Random Notes!</a>
     <div>
         <span class="d-block small text-secondary text-uppercase">game name</span>
         <span>$gameName</span>
