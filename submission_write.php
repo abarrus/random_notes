@@ -20,7 +20,7 @@
     ?>
     <div class="main-content">
         <h2>Prompt:</h2>
-        <p><?=  prompt() ?></p>
+        <p><?= prompt() ?></p>
         <h2>Your Submission:</h2>
         <form method="POST" action="actions/submit_words.php" id="myForm">
             <textarea required name="submission" class="form-control" id="myText" class="w-100" rows="1" aria-describedby="submission" placeholder="Write submission here..."></textarea>
@@ -48,7 +48,7 @@
             container = document.getElementById("words-container");
             container.innerHTML = "";
             unusedWords.forEach(word => {
-                const wordData = words.find(w=>w.text==word)
+                const wordData = words.find(w => w.text == word)
                 container.innerHTML += `
                     <button style="background-color: ${wordData.color}; border: 1px solid color-mix(in oklab, ${wordData.color}, black 25%)" class="btn text-dark" onclick="addWord('${word}')">
                         ${word}
@@ -62,11 +62,15 @@
             const colors = ["#ccd5ae", "#e9edc9", "#fefae0", "#faedcd", "#d4a373"];
             // a subset of colors
             const shapes = ["round", "square"];
-            
+
             wordsToAdd.forEach(word => {
                 const randomColor = colors[Math.floor(Math.random() * colors.length)];
                 const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
-                words.push({text: word, color: randomColor, shape: randomShape});
+                words.push({
+                    text: word,
+                    color: randomColor,
+                    shape: randomShape
+                });
             })
         }
 
@@ -96,8 +100,9 @@
                 ta.value += " " + word;
             }
 
-            // remove word from unusedWords
-            unusedWords = unusedWords.filter(w => w !== word);
+            // it's valid so remove ONE of it from list of unusedWords
+            // (if there are duplicates we don't want to remove them all)
+            unusedWords.splice(unusedWords.indexOf(word), 1);
             updateWordsHTML();
         }
 
@@ -131,7 +136,8 @@
                         invalidWords.push(word);
                     }
                 } else {
-                    // it's valid so remove it from list of unusedWords
+                    // it's valid so remove ONE of it from list of unusedWords
+                    // (if there are duplicates we don't want to remove them all)
                     unusedWords.splice(unusedWords.indexOf(word), 1);
                 }
             })
@@ -156,7 +162,6 @@
             ta.style.height = 'auto';
             // set height to scrollHeight
             ta.style.height = ta.scrollHeight + 'px';
-
             updateWordsHTML();
         });
 
@@ -170,4 +175,5 @@
         })
     </script>
 </body>
+
 </html>
