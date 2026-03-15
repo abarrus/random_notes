@@ -86,9 +86,10 @@
 
         load();
 
-
-
         const ta = document.getElementById('myText');
+
+        // hyphen should stay at the end so it doesn't accidentally create a range in regex
+        const allowedPunctuation = ",.!?:;\"'()-";
 
         function addWord(word) {
             // add word to textarea, with extra space (only if necessary)
@@ -111,10 +112,14 @@
         }
 
         ta.addEventListener('input', () => {
-            // \r is Windows newlines?
-            ta.value = ta.value.replace(/[^a-zA-Z \n\r]/g, "");
+            // delete forbidden punctuation from the actual textarea
+            let re = new RegExp(`[^a-zA-Z \\s${allowedPunctuation}]`, "g");
+            ta.value = ta.value.replace(re, "");
+            // we will ignore the allowed punctuation when judging what words are in the list
+            re = new RegExp(`[${allowedPunctuation}]`, "g");
+            const textToJudge = ta.value.replace(re, " ");
             // split on one or more whitespace
-            text = ta.value.split(/\s+/);
+            text = textToJudge.split(/\s+/);
 
             valid = true;
 
