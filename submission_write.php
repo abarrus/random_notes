@@ -132,7 +132,7 @@
                     }
                 } else {
                     // it's valid so remove it from list of unusedWords
-                    unusedWords = unusedWords.filter(w => w !== word);
+                    unusedWords.splice(unusedWords.indexOf(word), 1);
                 }
             })
 
@@ -170,5 +170,4 @@
         })
     </script>
 </body>
-
 </html>
