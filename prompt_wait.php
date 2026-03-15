@@ -17,20 +17,23 @@
     include "helpers/top.php";
     ?>
     <div class="main-content">
-        <p>Waiting for <span style="font-weight:bold;">
-            <?php
-                require_once "helpers/db.php";
-                if (session_status() === PHP_SESSION_NONE) {
-                    session_start();
-                }
-                // TODO;: just make a get ptompter name function
-                $gameId = $_SESSION["game_id"];
-                $prompterId = get_prompt_info($gameId)["prompter"];
-                $prompterName = get_name_from_id($gameId, $prompterId);
-                echo $prompterName;
-            ?>
-        </span> to write the prompt... refreshing in <span id="seconds"></span> seconds...</p>
-        <p>If you want it faster just reload the page yourself but be warned the server gets mad</p>
+        <div class="alert alert-info">
+
+            <p>Waiting for <span style="font-weight:bold;">
+                    <?php
+                    require_once "helpers/db.php";
+                    if (session_status() === PHP_SESSION_NONE) {
+                        session_start();
+                    }
+                    // TODO;: just make a get ptompter name function
+                    $gameId = $_SESSION["game_id"];
+                    $prompterId = get_prompt_info($gameId)["prompter"];
+                    $prompterName = get_name_from_id($gameId, $prompterId);
+                    echo $prompterName;
+                    ?>
+                </span> to write the prompt... refreshing in <span id="seconds"></span> seconds...</p>
+            <p class="mb-0">If you want it faster just reload the page yourself but be warned the server gets mad</p>
+        </div>
         <div class="container-fluid">
             <div class="row g-3" id="submissions"></div>
         </div>
