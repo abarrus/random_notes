@@ -144,10 +144,10 @@
 
             err.textContent = "";
             if (invalidWords.length > 0) {
-                err.textContent = "Invalid word(s): " + invalidWords.join(", ");
+                err.innerHTML = "Invalid word(s): " + invalidWords.join(", ") + "<br>";
             }
             if (duplicateWords.length > 0) {
-                err.innerHTML += "<br>Duplicate word(s): " + duplicateWords.join(", ");
+                err.innerHTML += "Duplicate word(s): " + duplicateWords.join(", ") + "<br>";
             }
 
             if (valid) {
