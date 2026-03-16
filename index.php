@@ -21,7 +21,7 @@
         <div class="row text-center flex-grow-1">
             <!-- Make Game half -->
             <div class="col-md-6 py-4 border-end d-flex flex-column align-items-center"> <!-- border-end puts line b/w the two halves -->
-                <h2>Create (testing2)</h2>
+                <h2>Create (testing3)</h2>
                 <div class="col-8">
                     <input type="text" class="form-control mb-2" name="game-name" aria-describedby="gameName" placeholder="Name here...">
                     <button type="submit" class="btn btn-primary w-100">Make Game</button>
