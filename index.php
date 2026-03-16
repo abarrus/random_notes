@@ -64,6 +64,13 @@
                             addGameToList(game.id, game.name, container);
                         }
                     });
+
+                    if (games.length == 0) {
+                        container.innerHTML = `
+                            <p class="text-muted text-uppercase">No games yet</p>
+                            <p class="text-muted text-uppercase small">Reload once there's a game</p>
+                        `
+                    }
                 });
         }
         loadGames();
