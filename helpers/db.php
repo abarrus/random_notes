@@ -3,8 +3,8 @@
 function connect()
 {
   $servername = "mysql.csh.rit.edu";
-  $username = "august";
-  $password = "$xV5qkBQQCDSEj@F6X";
+  $username = "randomnotes";
+  $password = "\$xV5qkBQQCDSEj@F6X";
   $dbname = "randomnotes";
 
   try {
