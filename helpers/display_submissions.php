@@ -12,10 +12,11 @@ if (session_status() === PHP_SESSION_NONE) {
  *                      The arrays should have "name" and "submission"
  * @param $playerName   String. The name
  */
-function containsPlayer($submissions, $playerId) {
-    return array_any($submissions, function ($submission) use ($playerId) {
+function containsPlayer($submissions, $playerId)
+{
+    return !empty(array_filter($submissions, function ($submission) use ($playerId) {
         return $submission["id"] == $playerId;
-    });
+    }));
 }
 
 $gameId = $_SESSION["game_id"];
@@ -28,12 +29,12 @@ $players = get_players($gameId);
 foreach ($players as $player) {
     // use ($player) lets the function see $player, since that's outside its scope
     if (!containsPlayer($submissions, $player["id"])) {
-        array_push($submissions, array("name"=>$player["name"], "id"=>$player["id"], "submission"=>null));
+        array_push($submissions, array("name" => $player["name"], "id" => $player["id"], "submission" => null));
     }
 }
 
 // send as JSON
 header('Content-Type: application/json');
-echo json_encode(array("submissions"=>$submissions));
+echo json_encode(array("submissions" => $submissions));
 
 exit;

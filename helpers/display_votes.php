@@ -14,10 +14,11 @@ if (session_status() === PHP_SESSION_NONE) {
  *                      The arrays should have "name" and "submission"
  * @param $playerName   String. The name
  */
-function containsPlayer($submissions, $playerId) {
-    return array_any($submissions, function ($submission) use ($playerId) {
+function containsPlayer($submissions, $playerId)
+{
+    return !empty(array_filter($submissions, function ($submission) use ($playerId) {
         return $submission["id"] == $playerId;
-    });
+    }));
 }
 
 $gameId = $_SESSION["game_id"];
@@ -30,13 +31,13 @@ $players = get_players($gameId);
 foreach ($players as $player) {
     // use ($player) lets the function see $player, since that's outside its scope
     if (!containsPlayer($votes, $player["id"])) {
-        array_push($votes, array("name"=>$player["name"], "id"=>$player["id"], "vote"=>null));
+        array_push($votes, array("name" => $player["name"], "id" => $player["id"], "vote" => null));
     }
 }
 
 // send as JSON
 header('Content-Type: application/json');
 // TODO don't need vote in an outer array like that, it's cause we used to have goToVoting in the data
-echo json_encode(array("votes"=>$votes));
+echo json_encode(array("votes" => $votes));
 
 exit;
