@@ -2,10 +2,10 @@
 
 function connect()
 {
-  $servername = "mysql.csh.rit.edu";
-  $username = "randomnotes";
-  $password = "\$xV5qkBQQCDSEj@F6X";
-  $dbname = "randomnotes";
+  $servername = getenv('servername');
+  $username = getenv('username');
+  $password = getenv('password');
+  $dbname = getenv('dbname');
 
   try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
