@@ -17,9 +17,6 @@ function connect()
   }
 }
 
-echo "hi<br>";
-echo "password is ".getenv('password');
-
 // Returns, as an array, all words that this player has in this game
 function get_words($gameId, $playerId)
 {
