@@ -57,10 +57,9 @@ $conn = connect();
 // make and truncate tables
 foreach ($tables as $name => $sql) {
     try {
-        $conn->exec($sql);
+        $conn->exec("DROP TABLE IF EXISTS " . $name);
 
-        // clear old entries if the table already existed
-        $conn->exec("TRUNCATE TABLE " . $name);
+        $conn->exec($sql);
 
         echo "Table $name is ready.<br>";
     } catch (PDOException $e) {
