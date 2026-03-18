@@ -18,7 +18,6 @@
     ?>
     <div class="main-content">
         <div class="alert alert-info">
-
             <p>Waiting for <span style="font-weight:bold;">
                     <?php
                     require_once "helpers/db.php";
@@ -33,9 +32,6 @@
                     ?>
                 </span> to write the prompt... refreshing in <span id="seconds"></span> seconds...</p>
             <p class="mb-0">If you want it faster just reload the page yourself but be warned the server gets mad</p>
-        </div>
-        <div class="container-fluid">
-            <div class="row g-3" id="submissions"></div>
         </div>
     </div>
     <script>
