@@ -39,7 +39,6 @@
                         const player = submissionWithName.name;
                         const submission = submissionWithName.submission;
                         const id = submissionWithName.id;
-                        console.log("submitted:", submissionWithName);
 
                         submissionsRow.innerHTML += `
                             <label type="radio" for="${id}" class="card p-2 d-flex flex-row align-items-center mb-3">
