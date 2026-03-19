@@ -18,35 +18,40 @@
     ?>
     <div style="background-color:#607196" class="main-content d-flex flex-grow-1 justify-content-center align-items-center">
         <div class="card w-75">
-            <form method="POST" action="actions/next_round.php" class="border-bottom p-4 mb-0">
+            <form method="POST" action="actions/next_round.php" class="border-bottom p-4 mb-0 container-fluid">
                 <!-- todo: not mobile friendly / pretty page -->
-                <div class="d-flex flex-wrap justify-content-sm-between justify-content-center">
-                    <h1 class="fw-bold mb-0">Players</h1>
-                    <button class="btn btn-primary rounded-pill px-4 fw-bold">Start Game</button>
+                <div class="row gap-3">
+                    <h1 class="fw-bold mb-0 col">Players</h1>
+                    <button class="col btn btn-primary rounded-pill px-4 fw-bold">Start Game</button>
                 </div>
             </form>
             <div id="players" class="p-4 d-flex flex-wrap gap-2 justify-content-center"></div>
             <div class="border-top d-flex justify-content-between p-4 align-items-center">
                 <p class="mb-0 text-muted small">Waiting!</p>
-                <button class="btn btn-outline-secondary btn-sm rounded-pill px-4">Refresh List</button>
+                <button onclick="refreshList()" class="btn btn-outline-secondary btn-sm rounded-pill px-4">Refresh List</button>
             </div>
         </div>
     </div>
     <script>
-        function load() {
+        function refreshList() {
+
             fetch("helpers/display_players.php")
                 .then(res => res.json())
-                .then(players => {
-                    console.log(players);
+                .then(newPlayers => {
                     const playersRow = document.getElementById("players");
-                    players.forEach(player => {
-                        playersRow.innerHTML += `
-                            <div class="p-2 px-4 border rounded-pill shadow-sm">${player.name}</div>
-                        `;
-                    })
+                    const newChildren = [];
+                    newPlayers.forEach(player => {
+                        const div = document.createElement("div");
+                        div.className = ("p-2 px-4 border rounded-pill shadow-sm");
+                        div.textContent = player.name;
+                        newChildren.push(div);
+                    });
+                    playersRow.replaceChildren(...newChildren);
                 })
         }
-        load();
+        refreshList();
+
+        setInterval(refreshList, 5000); // every 5 seconds
     </script>
 </body>
 
