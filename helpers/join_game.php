@@ -6,10 +6,13 @@ function give_starting_words($playerId, $gameId)
     include "consts.php";
     include "random_word.php";
 
+    $words = [];
     for ($i = 0; $i < $numStartWords; $i++) {
-        $word = random_word();
-        give_word($gameId, $playerId, $word);
+        $newWord = random_word();
+        array_push($words, $newWord);
     }
+
+    give_words($gameId, $playerId, $words);
 }
 
 function join_game($gameId, $nickname)

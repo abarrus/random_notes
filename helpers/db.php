@@ -30,13 +30,30 @@ function add_to_game($playerId, $gameId, $nickname)
   $stmt->execute([$playerId, $gameId, $nickname]);
 }
 
-function give_word($gameId, $playerId, $word)
+/**
+ * Gives a whole list of words to a player at once.
+ * 
+ * @param gameId 16-char game ID
+ * @param playerId 16-char player ID
+ * @param words A list of words
+ */
+function give_words($gameId, $playerId, $words)
 {
   $conn = connect();
 
-  $sql = "INSERT INTO Words (game_id, player_id, word) VALUES (?,?,?);";
+  $placeholders = str_repeat("(?, ?, ?),", count($words) - 1) . "(?, ?, ?)";
+
+  $sql = "INSERT INTO Words (game_id, player_id, word) VALUES $placeholders";
   $stmt = $conn->prepare($sql);
-  $stmt->execute([$gameId, $playerId, $word]);
+
+  $params = [];
+  foreach ($words as $word) {
+    $params[] = $gameId;
+    $params[] = $playerId;
+    $params[] = $word;
+  }
+
+  $stmt->execute($params);
 }
 
 function user_exists($playerId)
