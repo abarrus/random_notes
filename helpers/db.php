@@ -150,7 +150,7 @@ function set_nickname($playerId, $nickname)
 {
   $conn = connect();
 
-  $sql = "UPDATE Players SET name=? WHERE id=?";
+  $sql = "UPDATE GamePlayers SET name=? WHERE id=?";
   $stmt = $conn->prepare($sql);
   $stmt->execute([$nickname, $playerId]);
 }
@@ -164,6 +164,13 @@ function submit_sentence($gameId, $playerId, $submission)
   $stmt->execute([$gameId, $playerId, $submission, $gameId]);
 }
 
+function clear_words($gameId, $playerId) {
+  $conn = connect();
+
+  $sql = "DELETE FROM Words WHERE game_id = ? AND player_id = ?";
+  $stmt = $conn->prepare($sql);
+  $stmt->execute([$gameId, $playerId]);
+}
 
 function submit_vote($gameId, $playerId, $vote)
 {

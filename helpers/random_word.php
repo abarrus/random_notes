@@ -15,3 +15,16 @@ function random_word()
 
     return $stmt->fetchColumn();
 }
+
+function give_random_words($playerId, $gameId, $numWords)
+{
+    require_once "db.php";
+
+    $words = [];
+    for ($i = 0; $i < $numWords; $i++) {
+        $newWord = random_word();
+        array_push($words, $newWord);
+    }
+
+    give_words($gameId, $playerId, $words);
+}

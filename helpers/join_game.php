@@ -1,22 +1,11 @@
 <?php
-include "session.php";
-
-function give_starting_words($playerId, $gameId)
-{
-    include "consts.php";
-    include "random_word.php";
-
-    $words = [];
-    for ($i = 0; $i < $numStartWords; $i++) {
-        $newWord = random_word();
-        array_push($words, $newWord);
-    }
-
-    give_words($gameId, $playerId, $words);
-}
 
 function join_game($gameId, $nickname)
 {
+    include "session.php";
+    include "random_word.php";
+    include "consts.php";
+
     $playerId = login($nickname);
     $_SESSION["game_id"] = $gameId;
 
@@ -25,7 +14,7 @@ function join_game($gameId, $nickname)
     }
 
     if (!is_in_game($gameId, $playerId)) {
-        give_starting_words($playerId, $gameId);
+        give_random_words($playerId, $gameId, $numStartWords);
         add_to_game($playerId, $gameId, $nickname);
     }
 }
