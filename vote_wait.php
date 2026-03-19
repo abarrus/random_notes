@@ -20,8 +20,8 @@
     ?>
     <div class="main-content">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-6">
+            <div class="row g-5">
+                <div class="col-md-6">
                     <h5 class="text-success border-bottom pb-2">Voted</h5>
                     <div id="voted-list" class="list-group"></div>
                 </div>
