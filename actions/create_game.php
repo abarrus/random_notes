@@ -18,5 +18,5 @@ make_game($gameName, $gameId);
 
 join_game($gameId, $nickname);
 random_prompter($gameId);
-header("Location: /submission_write.php");
+header("Location: /lobby_prompter.php");
 exit;

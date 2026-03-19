@@ -7,5 +7,5 @@ $gameId = $_POST["id"];
 
 join_game($gameId, $nickname);
 
-header("Location: /submission_write.php");
+header("Location: /lobby_prompter.php");
 exit;
