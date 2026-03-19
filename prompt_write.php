@@ -9,6 +9,7 @@
     <!-- my styles -->
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Write - Random Notes!</title>
 </head>
 
 <body class="d-flex vh-100 flex-column">

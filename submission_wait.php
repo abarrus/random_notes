@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="js/auto_refresh.js"></script>
+    <title>Submission Wait - Random Notes!</title>
 </head>
 
 <body onload="autoRefreshAlert()">
