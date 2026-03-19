@@ -85,7 +85,7 @@ function clean_old_games()
   // but i don't feel like it rn
   $stmt = "
     DELETE FROM Games
-    WHERE last_changed < NOW() - INTERVAL 1 DAY;
+    WHERE last_changed < NOW() - INTERVAL 2 HOUR;
 
     DELETE FROM Words WHERE game_id NOT IN (
       SELECT game_id FROM Games
