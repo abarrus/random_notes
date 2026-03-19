@@ -36,7 +36,7 @@
         <ul>
             <li>You don't have to use all words.</li>
             <li>No duplicates (unless you actually have multiple of a word).</li>
-            <li> No special characters or numbers.</li>
+            <li>No numbers, but these characters are allowed: ,.!?:;"'()-</li>
             <li>You can add whatever whitespace you want.</li>
         </ul>
     </div>
