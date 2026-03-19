@@ -386,3 +386,21 @@ function get_name_from_id($gameId, $playerId) {
 
   return $stmt->fetchColumn();
 }
+
+function get_round($gameId) {
+  $conn = connect();
+
+  $sql = "SELECT round FROM Games WHERE id = ?";
+  $stmt = $conn->prepare($sql);
+  $stmt->execute([$gameId]);
+
+  return (int) $stmt->fetchColumn();
+}
+
+function next_round($gameId) {
+  $conn = connect();
+
+  $sql = "UPDATE Games SET round = round + 1 WHERE id = ?";
+  $stmt = $conn->prepare($sql);
+  $stmt->execute([$gameId]);
+}

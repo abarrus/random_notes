@@ -2,6 +2,8 @@
 require_once "db.php";
 
 /* could return:
+    - ROUND 0:
+        - gather
     - stage 1:
         - prompt_write
         - prompt_wait
@@ -28,8 +30,19 @@ function get_page() {
     $gameId = $_SESSION["game_id"];
     $playerId = $_SESSION["player_id"];
 
-    // is there a prompt?
     $prompt_info = get_prompt_info($gameId);
+
+    // is it round 0? (round 0 means lobby)
+    if (get_round($gameId) == 0) {
+        // if round 0: are you the prompter? (prompter is in charge of clicking start game)
+        if ($prompt_info["prompter"] == $playerId) {
+            return "lobby_prompter";
+        } else {
+            return "lobby";
+        }
+    }
+    
+    // is there a prompt?
     if ($prompt_info["prompt"] == null) {
         // if no prompt: are you the prompter?
         if ($prompt_info["prompter"] == $playerId) {
