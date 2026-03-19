@@ -8,9 +8,10 @@
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Results - Random Notes!</title>
+    <script src="js/auto_refresh.js"></script>
 </head>
 
-<body>
+<body onload="autoRefreshAlert()">
     <?php
     include "helpers/confirm_or_redirect.php";
     confirm_or_redirect("results");
@@ -19,8 +20,12 @@
     include "helpers/get_prompt.php";
     ?>
     <div class="main-content">
-        <h1 class="text-center m-3">Results!</h1>
+        <form class="d-flex justify-content-between" action="actions/next_round.php" method="POST">
+            <h1>Results!</h1>
+            <button id="next-round" hidden class="btn btn-success">Next Round</button>
+        </form>
         <div class="card p-3 my-4 mb-5">
+            <p class="text-muted text-uppercase small">Prompt</p>
             <p class="p-0 m-0"><?= prompt() ?></p>
         </div>
         <div id="results"></div>
@@ -52,6 +57,14 @@
                         rank++;
                     })
                 })
+
+            fetch("helpers/get_is_prompter.php")
+                .then(res => res.json())
+                .then(prompter => {
+                    if (prompter) {
+                        document.getElementById("next-round").hidden = false;
+                    }
+                });
         }
 
         load();

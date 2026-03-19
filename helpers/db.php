@@ -397,7 +397,7 @@ function get_round($gameId) {
   return (int) $stmt->fetchColumn();
 }
 
-function next_round($gameId) {
+function incremement_round($gameId) {
   $conn = connect();
 
   $sql = "UPDATE Games SET round = round + 1 WHERE id = ?";

@@ -1,5 +1,6 @@
 <?php
 require_once "../helpers/db.php";
+include "../helpers/random_prompter.php";
 
 // double check that the person requesting next round is the prompter
 // otherwise any player could go to this page to skip a round or to start the game
@@ -14,9 +15,11 @@ if ($prompt_info["prompter"] != $playerId) {
     exit;
 }
 
-next_round($gameId);
-
-// TODO: could randomize the prompter here?
+incremement_round($gameId);
+if (get_round($gameId) !== 1) {
+    set_prompt($gameId, null);
+    random_prompter($gameId);
+}
 
 header("LOCATION: /prompt_write.php"); // even if they aren't the writer, it will redirect to prompt_wait and be fine
 exit;
