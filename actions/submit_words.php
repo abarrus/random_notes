@@ -68,10 +68,20 @@ function check_sentence($gameId, $playerId, $submission, $allowedPunctuation)
         }
     }
 
-    return array("legal" => $legal, "remainingWords" => $remainingAllowedWords, "illegalWord" => $illegalWord, "wordsUsedCount"=>$wordsUsedCount);
+    return array("legal" => $legal, "remainingWords" => $remainingAllowedWords, "illegalWord" => $illegalWord, "wordsUsedCount" => $wordsUsedCount);
 }
 
-$submission = $_POST["submission"];
+function exit_if_already_submitted($gameId, $playerId)
+{
+    $submissions = get_submissions($gameId);
+    $alreadySubmitted = !empty(array_filter($submissions, function ($submission) use ($playerId) {
+        return $submission["id"] === $playerId;
+    }));
+    if ($alreadySubmitted) {
+        echo "NOT ALLOWED: This player has already submitted once.";
+        exit;
+    }
+}
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -80,9 +90,14 @@ if (session_status() === PHP_SESSION_NONE) {
 $gameId = $_SESSION["game_id"];
 $playerId = $_SESSION["player_id"];
 
+// check that the player hasn't already submitted
+exit_if_already_submitted($gameId, $playerId);
+
+$submission = $_POST["submission"];
+
 $res = check_sentence($gameId, $playerId, $submission, $allowedPunctuation);
 if (!$res["legal"]) {
-    echo "NOT SUBMITTED: At least one word / character that was not on your word list: " . $res["illegalWord"];
+    echo "NOT ALLOWED: At least one word / character that was not on your word list: " . $res["illegalWord"];
     exit;
 }
 clear_words($gameId, $playerId);
