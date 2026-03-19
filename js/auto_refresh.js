@@ -10,11 +10,18 @@
 let secondsLeft = 10;
 const span = document.createElement("span");
 
-function autoRefreshAlert() {
-  const mainContent = document.getElementsByClassName("main-content").item(0);
+function autoRefreshAlert(specialPlacement) {
+
+  const mainContent = specialPlacement
+    ? document.getElementById("auto-refresh-alert")
+    : document.getElementsByClassName("main-content").item(0);
 
   const alertBox = document.createElement("div");
   alertBox.classList.add("alert", "alert-info");
+
+  if (specialPlacement) {
+    alertBox.classList.add("mb-0");
+  }
 
   const p = document.createElement("p");
   p.classList.add("mb-0");

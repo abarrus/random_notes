@@ -8,9 +8,10 @@
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lobby - Random Notes!</title>
+    <script src="js/auto_refresh.js"></script>
 </head>
 
-<body class="d-flex vh-100 flex-column">
+<body class="d-flex vh-100 flex-column" onload="autoRefreshAlert(true)">
     <?php
     include "helpers/confirm_or_redirect.php";
     confirm_or_redirect("lobby");
@@ -23,15 +24,14 @@
                 <h1 class="fw-bold">Players</h1>
             </div>
             <div id="players" class="p-4 d-flex flex-wrap gap-2 justify-content-center"></div>
-            <div class="border-top d-flex justify-content-between p-4 align-items-center">
-                <p class="mb-0 text-muted small">Waiting!</p>
+            <div class="border-top d-flex flex-column flex-sm-row justify-content-center p-4 justify-content-sm-between align-items-center">
+                <div id="auto-refresh-alert"></div>
                 <button onclick="refreshList()" class="btn btn-outline-secondary btn-sm rounded-pill px-4">Refresh List</button>
             </div>
         </div>
     </div>
     <script>
         function refreshList() {
-
             fetch("helpers/display_players.php")
                 .then(res => res.json())
                 .then(newPlayers => {
@@ -47,8 +47,6 @@
                 })
         }
         refreshList();
-
-        setInterval(refreshList, 5000); // every 5 seconds
     </script>
 </body>
 
