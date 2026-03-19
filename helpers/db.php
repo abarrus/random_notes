@@ -192,6 +192,17 @@ function get_nickname($playerId)
   return $name ?: null;
 }
 
+/**
+ * Fetches all submissions for the current round of a specific game 
+ * 
+ * @param gameId 16-char game ID
+ * @return list<array{
+ *  submission: string,
+ *  round: int,
+ *  name: string (player name),
+ *  id: string (player ID)
+ * }>
+ */
 function get_submissions($gameId)
 {
   $conn = connect();
