@@ -69,25 +69,33 @@ foreach ($tables as $name => $sql) {
 
 // fill words table
 $categories = array("adjectives", "nouns", "verbs", "other");
+$params = [];
+$totalWords = 0;
 foreach ($categories as $cat) {
     $wordsJson = file_get_contents(__DIR__ . "/../words/" . $cat . ".json");
     $words = json_decode($wordsJson);
 
-    $sql = "INSERT INTO AllWords (word, category) VALUES (?, ?)";
-    $stmt = $conn->prepare($sql);
     foreach ($words as $word) {
-        $stmt->execute([$word, $cat]);
+        $params[] = $word;
+        $params[] = $cat;
     }
+
+    $totalWords += count($words);
 }
+
+$placeholders = str_repeat("(?, ?),", $totalWords - 1) . "(?, ?)";
+$sql = "INSERT INTO AllWords (word, category) VALUES $placeholders";
+$stmt = $conn->prepare($sql);
+$stmt->execute($params);
+
 echo "Done adding all words.<br>";
 
 // fill prompts table
 $promptsJson = file_get_contents(__DIR__ . "/../words/prompts.json");
 $prompts = json_decode($promptsJson);
-
-$sql = "INSERT INTO Prompts (prompt) VALUES (?)";
+$placeholders = str_repeat("(?),", count($prompts) - 1) . "(?)";
+$sql = "INSERT INTO Prompts (prompt) VALUES $placeholders";
 $stmt = $conn->prepare($sql);
-foreach ($prompts as $prompt) {
-    $stmt->execute([$prompt]);
-}
+$stmt->execute($prompts);
+
 echo "Done adding all prompts.<br>";
