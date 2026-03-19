@@ -7,9 +7,10 @@
     <!-- my styles -->
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/auto_refresh.js"></script>
 </head>
 
-<body>
+<body onload="autoRefreshAlert()">
     <?php
     include "helpers/confirm_or_redirect.php";
     confirm_or_redirect("submission_wait");
@@ -17,10 +18,6 @@
     include "helpers/top.php";
     ?>
     <div class="main-content">
-        <div class="alert alert-info">
-            <p>Waiting for other players... refreshing in <span id="seconds"></span> seconds...</p>
-            <p class="mb-0">If you want it faster just reload the page yourself but be warned the server gets mad</p>
-        </div>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-6">
@@ -39,18 +36,6 @@
         </div>
     </div>
     <script>
-        const span = document.getElementById("seconds");
-        secondsLeft = 10;
-        span.innerText = secondsLeft;
-        setInterval(myTimer, 1000); // every second
-        function myTimer() {
-            secondsLeft--;
-            span.innerText = secondsLeft;
-            if (secondsLeft == 0) {
-                window.location.reload();
-            }
-        }
-
         function load() {
             fetch("helpers/display_submissions.php")
                 .then(res => res.json())

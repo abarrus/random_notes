@@ -7,9 +7,10 @@
     <!-- my styles -->
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/auto_refresh.js"></script>
 </head>
 
-<body>
+<body onload="autoRefreshAlert()">
     <?php
     include "helpers/confirm_or_redirect.php";
     confirm_or_redirect("vote_wait");
@@ -17,11 +18,6 @@
     include "helpers/top.php";
     ?>
     <div class="main-content">
-        <div class="alert alert-info">
-            Waiting for other players to vote...Refreshing in <span id="seconds" class="fw-bold"></span> seconds...
-            <br>
-            If you want it faster just reload the page yourself but be warned the server gets mad
-        </div>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-6">
@@ -37,18 +33,6 @@
         </div>
     </div>
     <script>
-        const span = document.getElementById("seconds");
-        secondsLeft = 10;
-        span.innerText = secondsLeft;
-        setInterval(myTimer, 1000); // every second
-        function myTimer() {
-            secondsLeft--;
-            span.innerText = secondsLeft;
-            if (secondsLeft == 0) {
-                window.location.reload();
-            }
-        }
-
         function load() {
             fetch("helpers/display_votes.php")
                 .then(res => res.json())
