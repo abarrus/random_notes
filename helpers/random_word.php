@@ -5,7 +5,7 @@ function random_word()
     require_once "db.php";
     $conn = connect();
 
-    $categories = array("adjectives", "nouns", "verbs", "other");
+    $categories = array("adjectives", "nouns", "verbs", "verbs", "other", "other", "other");
     // each of the words lists has a 25% chance of being chosen
     $cat = $categories[array_rand($categories)];
     
