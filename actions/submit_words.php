@@ -100,9 +100,11 @@ if (!$res["legal"]) {
     echo "NOT ALLOWED: At least one word / character that was not on your word list: " . $res["illegalWord"];
     exit;
 }
-clear_words($gameId, $playerId);
-give_words($gameId, $playerId, $res["remainingWords"]);
-give_random_words($playerId, $gameId, $res["wordsUsedCount"]);
+if ($res["wordsUsedCount"] > 0) {
+    clear_words($gameId, $playerId);
+    give_words($gameId, $playerId, $res["remainingWords"]);
+    give_random_words($playerId, $gameId, $res["wordsUsedCount"]);
+}
 
 submit_sentence($gameId, $playerId, $submission);
 
