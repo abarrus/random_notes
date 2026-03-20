@@ -4,10 +4,13 @@
 <head>
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- bootstrap icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <!-- my styles -->
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submission Write - Random Notes!</title>
+
 </head>
 
 <body>
@@ -26,6 +29,18 @@
         <form method="POST" action="actions/submit_words.php" id="myForm">
             <textarea required name="submission" class="form-control" id="myText" class="w-100" rows="1" aria-describedby="submission" placeholder="Write submission here..."></textarea>
             <p id="err"></p>
+            <div class="d-flex gap-3 justify-content-between flex-column-reverse flex-sm-row mb-3">
+                <div id="punctuation-container" class="d-flex flex-wrap gap-3 justify-content-center">
+                </div>
+                <div class="d-flex gap-3">
+                    <button onclick="backspace()" class="btn btn-dark px-4 w-100 w-sm-auto" type="button">
+                        <i class="bi bi-backspace-fill"></i>
+                    </button>
+                    <button onclick="newline()" class="btn btn-dark px-4 w-100 w-sm-auto" type="button">
+                        <i class="bi bi-arrow-return-left"></i>
+                    </button>
+                </div>
+            </div>
             <div class="d-flex flex-wrap gap-3" id="words-container">
             </div>
             <hr>
@@ -92,6 +107,25 @@
         // hyphen should stay at the end so it doesn't accidentally create a range in regex
         const allowedPunctuation = ",.!?:;\"'()-";
 
+        function initializePunctuationButtons() {
+            const div = document.getElementById("punctuation-container");
+            for (const char of allowedPunctuation) {
+                const btn = document.createElement("button");
+                btn.className = "btn btn-dark px-4";
+                btn.textContent = char;
+                btn.type = "button";
+                btn.onclick = () => addPunctuation(char);
+                div.append(btn);
+            };
+        }
+        initializePunctuationButtons();
+
+        function addPunctuation(char) {
+            console.log("clicked", char);
+            ta.value += char;
+            sizeTa();
+        }
+
         function addWord(word) {
             // add word to textarea, with extra space (only if necessary)
             lastLetter = s => s.charAt(s.length - 1);
@@ -108,11 +142,32 @@
             updateWordsHTML();
         }
 
+        function backspace() {
+            // each word and following whitespace is its own item
+            // each non-letter non-space character and the following whitespace is its own item
+            const pattern = /(?<=\s+)(?=[^\s])|(?=[^a-z\s])/gi;
+            // "hello there!!    person" becomes:
+            // ["hello ", "there", "!", "!    ", "person"]
+            const words = ta.value.split(pattern);
+            words.pop();
+            ta.value = words.join("");
+            
+            // does more than necessary but will add back the word you just deleted
+            checkWords();
+        }
+
+        function newline() {
+            ta.value += "\n";
+            sizeTa();
+        }
+
         function wordIsInWords(wordToCheck) {
             return words.some(obj => wordToCheck.toLowerCase() === obj.text.toLowerCase());
         }
 
-        ta.addEventListener('input', () => {
+        ta.addEventListener('input', checkWords);
+
+        function checkWords() {
             // delete forbidden punctuation from the actual textarea
             let re = new RegExp(`[^a-zA-Z \\s${allowedPunctuation}]`, "g");
             ta.value = ta.value.replace(re, "");
@@ -163,13 +218,17 @@
             }
 
             // textarea rows increases when you add a newline
+            sizeTa();
 
+            updateWordsHTML();
+        }
+
+        function sizeTa() {
             // reset height so shrinking works too
             ta.style.height = 'auto';
             // set height to scrollHeight
             ta.style.height = ta.scrollHeight + 'px';
-            updateWordsHTML();
-        });
+        }
 
         const form = document.getElementById("myForm");
         form.addEventListener('submit', e => {
