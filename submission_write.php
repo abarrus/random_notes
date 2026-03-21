@@ -166,6 +166,13 @@
         }
 
         ta.addEventListener('input', checkWords);
+        
+        ta.addEventListener('keydown', (e) => {
+            if (e.key === "Backspace") {
+                e.preventDefault();
+                backspace();
+            }
+        })
 
         function checkWords() {
             // delete forbidden punctuation from the actual textarea
