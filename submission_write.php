@@ -170,31 +170,49 @@
          * If the word had whitespace after it,
          * this deletes all the whitespace and the word.
          * 
-         * TODO:
-         * - if you have "word-anotherword\n\n\n" and use this,
-         *      it deletes the hyphen too (so only "word" is left).
-         *      instead, I want it to only delete "anotherword\n\n\n"
-         *      (so "word-" is left)
-         * - shouldn’t delete the whole word if it’s invalid
-         *      it should just delete one letter like normal
-         *      or maybe it deletes the whole word if you use the button,
-         *      but only one letter if you use your keyboard?
-         * 
          * Used for backspace button and
          * when a player clicks the backspace key on their keyboard.
+         * 
+         * @param stopIfInvalidWord boolean. 
+         * @return boolean. if it actually deleted a word.
+         *      the only reason if would return false is it stopIfInvalidWord is true
+         *          AND the word to delete is not a valid word
          */
-        function backspace() {
+        function backspace(stopIfInvalidWord) {
             // each word and following whitespace is its own item
             // each non-letter non-space character and the following whitespace is its own item
-            const pattern = /(?<=\s+)(?=[^\s])|(?=[^a-z\s])/gi;
+            const pattern = /(?<=\s+)(?=[^\s])|(?=[^a-z\s])|(?<=[^a-z\s])(?=[^\s])/gi;
             // "hello there!!    person" becomes:
             // ["hello ", "there", "!", "!    ", "person"]
             const words = ta.value.split(pattern);
+
+            if (stopIfInvalidWord) {
+                const strip = s => s.replace(/\s+/g, "");
+                const lastWord = strip(words[words.length - 1]);
+                if (!wordIsInWords(lastWord) && !allowedPunctuation.includes(lastWord)) {
+                    return false;
+                }
+            }
+
             words.pop();
             ta.value = words.join("");
 
             // does more than necessary but will add back the word you just deleted
             checkWords();
+
+            return true;
+        }
+
+        /**
+         * This function is helpful because words is an array of objects.
+         * 
+         * Used for checkWords() and backspace()
+         * 
+         * @param wordToCheck string
+         * @return boolean
+         */
+        function wordIsInWords(wordToCheck) {
+            return words.some(obj => wordToCheck.toLowerCase() === obj.text.toLowerCase());
         }
 
         /**
@@ -202,15 +220,6 @@
          * if the textarea value has invalid or duplicate words.
          */
         function checkWords() {
-            /**
-             * This function is helpful because words is an array of objects.
-             * 
-             * @param wordToCheck string
-             * @return boolean
-             */
-            function wordIsInWords(wordToCheck) {
-                return words.some(obj => wordToCheck.toLowerCase() === obj.text.toLowerCase());
-            }
 
             // delete forbidden punctuation from the actual textarea
             let re = new RegExp(`[^a-zA-Z \\s${allowedPunctuation}]`, "g");
@@ -316,11 +325,12 @@
             if (e.key === "Backspace") {
                 hasSelectedText = ta.selectionStart !== ta.selectionEnd;
                 if (!hasSelectedText) {
-                    e.preventDefault();
-                    backspace();
+                    if (backspace(stopIfInvalidWord = true)) {
+                        event.preventDefault();
+                    }
                 }
             }
-        })
+        });
 
         // hyphen should stay at the end so it doesn't accidentally create a range in regex
         const allowedPunctuation = ",.!?:;\"'()-";
