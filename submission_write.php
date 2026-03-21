@@ -144,6 +144,7 @@
             // (if there are duplicates we don't want to remove them all)
             unusedWords.splice(unusedWords.indexOf(word), 1);
             updateWordsHTML();
+            sizeTextArea();
         }
 
         /**
