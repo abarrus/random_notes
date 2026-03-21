@@ -314,8 +314,11 @@
 
         ta.addEventListener('keydown', (e) => {
             if (e.key === "Backspace") {
-                e.preventDefault();
-                backspace();
+                hasSelectedText = ta.selectionStart !== ta.selectionEnd;
+                if (!hasSelectedText) {
+                    e.preventDefault();
+                    backspace();
+                }
             }
         })
 
