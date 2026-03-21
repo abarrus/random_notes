@@ -187,6 +187,7 @@
             invalidWords = [];
 
             text.forEach(word => {
+                word = word.toLowerCase();
                 if (word === "") return;
 
                 if (!unusedWords.includes(word)) {
