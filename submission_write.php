@@ -56,57 +56,61 @@
         </ul>
     </div>
     <script>
-        // each word has a color and shape
-        words = [];
-        unusedWords = [];
-
+        /**
+         * Clears the words in the words UI,
+         * then adds in all the words from the global words array
+         * 
+         * Used both for initial setup and after things are changed
+         * (like a word being written)
+         */
         function updateWordsHTML() {
             container = document.getElementById("words-container");
             container.innerHTML = "";
             unusedWords.forEach(word => {
                 const wordData = words.find(w => w.text == word)
                 container.innerHTML += `
-                    <button style="background-color: ${wordData.color}; border: 1px solid color-mix(in oklab, ${wordData.color}, black 25%)" class="btn text-dark" onclick="addWord('${word}')">
+                    <button type="button" style="background-color: ${wordData.color}; border: 1px solid color-mix(in oklab, ${wordData.color}, black 25%)" class="btn text-dark" onclick="addWord('${word}')">
                         ${word}
                     </button>`
             });
         }
 
-        // make words list with random colors and shapes
-        // give it just a regular list of words
-        function initializeWordsList(wordsToAdd) {
-            const colors = ["#ccd5ae", "#e9edc9", "#fefae0", "#faedcd", "#d4a373"];
-            // a subset of colors
-            const shapes = ["round", "square"];
-
-            wordsToAdd.forEach(word => {
-                const randomColor = colors[Math.floor(Math.random() * colors.length)];
-                const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
-                words.push({
-                    text: word,
-                    color: randomColor,
-                    shape: randomShape
-                });
-            })
-        }
-
+        /**
+         * Add all the words the player has to the words list and to the UI.
+         */
         function load() {
+            /**
+             * Adds the given words to the global array words, with random colors for each word.
+             * 
+             * @param wordsToAdd list(string)
+             */
+            function initializeWordsList(wordsToAdd) {
+                const colors = ["#ccd5ae", "#e9edc9", "#fefae0", "#faedcd", "#d4a373"];
+
+                wordsToAdd.forEach(word => {
+                    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                    words.push({
+                        text: word,
+                        color: randomColor,
+                    });
+                })
+            }
+
             fetch("helpers/get_words.php")
                 .then(res => res.json())
                 .then(data => {
                     unusedWords = [...data];
                     initializeWordsList(data);
                     updateWordsHTML();
-                })
+                });
         }
 
-        load();
-
-        const ta = document.getElementById('myText');
-
-        // hyphen should stay at the end so it doesn't accidentally create a range in regex
-        const allowedPunctuation = ",.!?:;\"'()-";
-
+        /**
+         * Add the punctuation buttons to the UI.
+         * 
+         * Must be called after global var allowedPunctuation has been initialized.
+         * Only to be called once during setup.
+         */
         function initializePunctuationButtons() {
             const div = document.getElementById("punctuation-container");
             for (const char of allowedPunctuation) {
@@ -118,19 +122,19 @@
                 div.append(btn);
             };
         }
-        initializePunctuationButtons();
 
-        function addPunctuation(char) {
-            console.log("clicked", char);
-            ta.value += char;
-            sizeTa();
-        }
-
+        /**
+         * Add word to textarea, with extra space (only if necessary)
+         * The word buttons use this.
+         */
         function addWord(word) {
-            // add word to textarea, with extra space (only if necessary)
-            lastLetter = s => s.charAt(s.length - 1);
-            lastLetterIsWhitespace = /\s/.test(lastLetter(ta.value));
-            if (ta.value === "" || lastLetterIsWhitespace) {
+            // subset of the allowed punctuation, that doesn't need to automatically have a space after it
+            const noSpacePunctuation = "\"'(-";
+
+            const lastLetter = ta.value.charAt(ta.value.length - 1);
+            const lastLetterIsWhitespace = /\s/.test(lastLetter);
+            const lastLetterIsNoSpacePunctuation = noSpacePunctuation.includes(lastLetter);
+            if (ta.value === "" || lastLetterIsWhitespace || lastLetterIsNoSpacePunctuation) {
                 ta.value += word;
             } else {
                 ta.value += " " + word;
@@ -142,6 +146,43 @@
             updateWordsHTML();
         }
 
+        /**
+         * Adds a piece of punctuation to the text area.
+         * The punctuation buttons use this.
+         */
+        function addPunctuation(char) {
+            ta.value += char;
+            sizeTextArea();
+        }
+
+        /**
+         * Add a newline to the textarea
+         * 
+         * Used for the newline button.
+         */
+        function newline() {
+            ta.value += "\n";
+            sizeTextArea();
+        }
+
+        /**
+         * Delete last word (or non-letter character) in textarea.
+         * If the word had whitespace after it,
+         * this deletes all the whitespace and the word.
+         * 
+         * TODO:
+         * - if you have "word-anotherword\n\n\n" and use this,
+         *      it deletes the hyphen too (so only "word" is left).
+         *      instead, I want it to only delete "anotherword\n\n\n"
+         *      (so "word-" is left)
+         * - shouldn’t delete the whole word if it’s invalid
+         *      it should just delete one letter like normal
+         *      or maybe it deletes the whole word if you use the button,
+         *      but only one letter if you use your keyboard?
+         * 
+         * Used for backspace button and
+         * when a player clicks the backspace key on their keyboard.
+         */
         function backspace() {
             // each word and following whitespace is its own item
             // each non-letter non-space character and the following whitespace is its own item
@@ -151,30 +192,26 @@
             const words = ta.value.split(pattern);
             words.pop();
             ta.value = words.join("");
-            
+
             // does more than necessary but will add back the word you just deleted
             checkWords();
         }
 
-        function newline() {
-            ta.value += "\n";
-            sizeTa();
-        }
-
-        function wordIsInWords(wordToCheck) {
-            return words.some(obj => wordToCheck.toLowerCase() === obj.text.toLowerCase());
-        }
-
-        ta.addEventListener('input', checkWords);
-        
-        ta.addEventListener('keydown', (e) => {
-            if (e.key === "Backspace") {
-                e.preventDefault();
-                backspace();
-            }
-        })
-
+        /**
+         * Show error text
+         * if the textarea value has invalid or duplicate words.
+         */
         function checkWords() {
+            /**
+             * This function is helpful because words is an array of objects.
+             * 
+             * @param wordToCheck string
+             * @return boolean
+             */
+            function wordIsInWords(wordToCheck) {
+                return words.some(obj => wordToCheck.toLowerCase() === obj.text.toLowerCase());
+            }
+
             // delete forbidden punctuation from the actual textarea
             let re = new RegExp(`[^a-zA-Z \\s${allowedPunctuation}]`, "g");
             ta.value = ta.value.replace(re, "");
@@ -226,26 +263,65 @@
             }
 
             // textarea rows increases when you add a newline
-            sizeTa();
+            sizeTextArea();
 
             updateWordsHTML();
         }
 
-        function sizeTa() {
+        /**
+         * Give the textarea the right amount of rows for the text in it.
+         */
+        function sizeTextArea() {
             // reset height so shrinking works too
             ta.style.height = 'auto';
             // set height to scrollHeight
             ta.style.height = ta.scrollHeight + 'px';
         }
 
-        const form = document.getElementById("myForm");
-        form.addEventListener('submit', e => {
+        /**
+         * If there are invalid or duplicate words in the textarea
+         * (if the error text has text in it)
+         * don't allow the user to submit,
+         * and pop up a warning.
+         */
+        function preventSubmitIfInvalid(event) {
             err = document.getElementById("err");
             if (err.textContent != "") {
-                e.preventDefault();
+                event.preventDefault();
                 alert("Can't submit, there's invalid or duplicate words");
             }
+        }
+
+        // words will look like this:
+        // list(
+        //      object(
+        //          text: string,
+        //          color: string
+        //      )
+        // )
+        words = [];
+
+        // just a regular list of strings
+        unusedWords = [];
+
+        load();
+
+        const form = document.getElementById("myForm");
+        form.addEventListener('submit', preventSubmitIfInvalid);
+
+        const ta = document.getElementById('myText');
+        ta.addEventListener('input', checkWords);
+
+        ta.addEventListener('keydown', (e) => {
+            if (e.key === "Backspace") {
+                e.preventDefault();
+                backspace();
+            }
         })
+
+        // hyphen should stay at the end so it doesn't accidentally create a range in regex
+        const allowedPunctuation = ",.!?:;\"'()-";
+        initializePunctuationButtons();
     </script>
 </body>
 
