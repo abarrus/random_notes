@@ -4,6 +4,8 @@
 <head>
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- bootstrap icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <!-- my styles -->
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +13,6 @@
 </head>
 
 <body>
-
     <form method="POST" action="actions/create_game.php" class="d-flex flex-column min-vh-100">
         <div class="bg-dark text-light p-3 text-center p-5">
             <h1 class="display-3 italic-title fw-bold mb-5">Random Notes!</h1>
@@ -35,6 +36,9 @@
                 </div>
             </div>
         </div>
+        <footer class="p-4 bg-dark">
+            <a href="https://github.com/abarrus/random_notes" title="GitHub repository for this project"><i class="bi bi-github"></i></a>
+        </footer>
     </form>
     <script>
         function loadGames() {
