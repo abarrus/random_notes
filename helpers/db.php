@@ -33,12 +33,16 @@ function add_to_game($playerId, $gameId, $nickname)
 /**
  * Gives a whole list of words to a player at once.
  * 
- * @param gameId 16-char game ID
- * @param playerId 16-char player ID
- * @param words A list of words
+ * @param string $gameId 16-char game ID
+ * @param string $playerId 16-char player ID
+ * @param string[] $words A list of words
  */
-function give_words($gameId, $playerId, $words)
+function give_words(string $gameId, string $playerId, array $words)
 {
+  if (count($words) === 0) {
+    return;
+  }
+  
   $conn = connect();
 
   $placeholders = str_repeat("(?, ?, ?),", count($words) - 1) . "(?, ?, ?)";
