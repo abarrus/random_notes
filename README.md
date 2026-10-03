@@ -52,7 +52,7 @@ The current code connects to an online database using secret env variables. You 
 - You don't want to commit these changes, so do this:
   - Go to terminal and navigate to random_notes main folder
   - Run `git update-index --assume-unchanged helpers/db_connect.php`
-  - Add this comment at the top of the file so you don't forget or get confused later!
+  - Add this comment at the top of db_connect.php so you don't forget or get confused later!
     ```php
     /*
 
